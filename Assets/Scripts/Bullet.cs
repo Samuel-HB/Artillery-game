@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private Canon ref_Canon;
+    TankBehavior ref_TankBehavior;
+
+    public int damage = 0;
+
     public float timeBeforeDestroy = 3f;
     Rigidbody2D rb;
 
@@ -13,6 +18,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        ref_Canon = GetComponentInParent<Canon>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -29,11 +35,9 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.GetComponent<TankBehavior>() != null)
         {
-            // changement de refTankMovement en refTankBehavior
-            TankBehavior refTankBehavior = collision.gameObject.GetComponent<TankBehavior>();
-            //TankMovement refTankMovement = this;
-            refTankBehavior.health -= 50;
-            Debug.Log(refTankBehavior.health);
+            ref_TankBehavior = collision.gameObject.GetComponent<TankBehavior>();
+            ref_TankBehavior.health -= damage;
+            Debug.Log(ref_TankBehavior.health);
         }
     }
 }

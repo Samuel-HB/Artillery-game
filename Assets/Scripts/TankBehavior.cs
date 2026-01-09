@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class TankBehavior : MonoBehaviour
 {
-    //[SerializeField] private SO_Tank so_tank;
     private Canon refrenceToCanonScript;
-    [SerializeField] private SO_Tank so_tank;
+    [SerializeField] public SO_Tank so_tank;
     public int health;
     public float speed;
+    private bool isGrounded = false;
+
+    [SerializeField] private WheelRotation ref_WheelRotationLeft;
+    [SerializeField] private WheelRotation ref_WheelRotationRight;
 
     void Start()
     {
@@ -17,7 +20,24 @@ public class TankBehavior : MonoBehaviour
     
     void Update()
     {
-        if (BattleManager.playerPlays == refrenceToCanonScript.tankID && BattleManager.state == State.WaitingForInput)
+        if (ref_WheelRotationLeft.isWheelGrounded == true && ref_WheelRotationRight.isWheelGrounded == true) {
+            isGrounded = true;
+            speed = so_tank.movementSpeed;
+        }
+        else if (ref_WheelRotationLeft.isWheelGrounded == false && ref_WheelRotationRight.isWheelGrounded == false) {
+            isGrounded = false;
+        }
+        else if (ref_WheelRotationLeft.isWheelGrounded == true || ref_WheelRotationRight.isWheelGrounded == false) {
+            isGrounded = true;
+            speed = so_tank.movementSpeed / 2;
+        }
+        else if (ref_WheelRotationLeft.isWheelGrounded == false || ref_WheelRotationRight.isWheelGrounded == true) {
+            isGrounded = true;
+            speed = so_tank.movementSpeed / 2;
+        }
+
+        if (BattleManager.playerPlays == refrenceToCanonScript.tankID &&
+            BattleManager.state == State.WaitingForInput && isGrounded == true)
         {
             if (Input.GetKey(KeyCode.RightArrow)) {
                 transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;

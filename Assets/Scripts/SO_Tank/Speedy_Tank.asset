@@ -16,3 +16,5 @@ MonoBehaviour:
   health: 60
   movementSpeed: 7.5
   airForce: 0
+  hasHeavyCanon: 0
+  hasLightCanon: 1

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a469796f6c714a4eaedcb63383b09d4, type: 3}
-  m_Name: Simple_Tank
-  m_EditorClassIdentifier: Assembly-CSharp::SO_Tank
-  tankName: gus
-  health: 100
-  movementSpeed: 5
-  airForce: 0
+  m_Script: {fileID: 11500000, guid: bfd2f53702289c544822d78d9068d891, type: 3}
+  m_Name: LightCanon
+  m_EditorClassIdentifier: Assembly-CSharp::SO_SimpleCanon
+  weaponName: gus
+  damage: 30
+  launchVelocity: 10

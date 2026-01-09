@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour
 {
-    // créer un ScriptableObject des tanks
-
     [SerializeField] private Transform tank_game;
+    public static List<Transform> tanks;
     private Vector3 tankFirstPosition = new Vector3(0, 0);
-    public List<Transform> tanks; //pas utile
+    private float initialHigh = 0.1f;
 
     public static int numberOfPlayer = 2;
     public static int maxNumberOfPlayer = 4;
@@ -74,37 +73,37 @@ public class BattleManager : MonoBehaviour
             {
                 case 2:
                     if (i == 0) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-20, -15), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-20, -15), initialHigh);
                     }
                     else {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(15, 20), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(15, 20), initialHigh);
                     }
                     break;
 
                 case 3:
                     if (i == 0) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-20, -17), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-20, -17), initialHigh);
                     }
                     else if (i == 1) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(17, 20), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(17, 20), initialHigh);
                     }
                     else {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-3, 3), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-3, 3), initialHigh);
                     }
                     break;
 
                 case 4:
                     if (i == 0) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-20, -18), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-20, -18), initialHigh);
                     }
                     else if (i == 1) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(18, 20), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(18, 20), initialHigh);
                     }
                     else if (i == 2) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-8, -6), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(-8, -6), initialHigh);
                     }
                     else {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(6, 8), 0);
+                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(Random.Range(6, 8), initialHigh);
                     }
                     break;
             }
@@ -114,10 +113,6 @@ public class BattleManager : MonoBehaviour
 
             Canon refrenceToCanonScript = tank.GetComponentInChildren<Canon>();
             refrenceToCanonScript.tankID = i;
-
-            //si problème parce qu'on prend un tank déjà instancié auparavant alors
-            //enlever la liste et faire
-            //Canon refrenceToCanon = Instantiate(tank_game, tankFirstPosition, Quaternion.identity).GetComponentInChildren<Canon>();
         }
     }
 }

@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8066724043912293332}
   - component: {fileID: 6680861869131410628}
   - component: {fileID: 5123937267123617425}
+  - component: {fileID: 7674986064326470995}
   m_Layer: 0
   m_Name: Wheel left
   m_TagString: Untagged
@@ -158,6 +159,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &7674986064326470995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833799252269655159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca32978ca1f6be64caf39a143b716f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelRotation
+  isWheelGrounded: 0
 --- !u!1 &2327144695996446005
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +254,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankMovement
   so_tank: {fileID: 11400000, guid: f031f9dc4bd3c734f869087b07aec215, type: 2}
   health: 0
+  speed: 0
+  ref_WheelRotationLeft: {fileID: 7674986064326470995}
+  ref_WheelRotationRight: {fileID: 7873538417792053170}
 --- !u!50 &2262476715127673606
 Rigidbody2D:
   serializedVersion: 5
@@ -450,10 +467,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Canon
   tankID: 0
+  weapons: {fileID: 0}
+  actualCanon: {fileID: 0}
   bullet: {fileID: 4044791374164343465, guid: c94e5348c2a9b4d4ebc813e5e7db8eaf, type: 3}
   firePoint: {fileID: 7296794454339000616}
   startTrajectoryPoint: {fileID: 8083628543326565792}
-  launchVelocity: 10
   point: {fileID: 6744962056003772560, guid: a8c96fd850ac97a4fa3d544cfea20769, type: 3}
   pointsNumber: 40
   pointSpace: 0.03
@@ -468,6 +486,7 @@ GameObject:
   - component: {fileID: 2039081385825123190}
   - component: {fileID: 979110530808442318}
   - component: {fileID: 6544637296316679702}
+  - component: {fileID: 7873538417792053170}
   m_Layer: 0
   m_Name: Wheel right
   m_TagString: Untagged
@@ -584,6 +603,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &7873538417792053170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6780932409490507269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca32978ca1f6be64caf39a143b716f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelRotation
+  isWheelGrounded: 0
 --- !u!1 &8868396112691930666
 GameObject:
   m_ObjectHideFlags: 0

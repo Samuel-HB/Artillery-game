@@ -2,30 +2,44 @@ using UnityEngine;
 
 public class WheelRotation : MonoBehaviour
 {
-    private TankBehavior refTankBehavior;
-
+    private TankBehavior ref_TankBehavior;
     private Vector3 lastPosition;
+    public bool isWheelGrounded = false;
+
 
     void Start()
     {
-        refTankBehavior = GetComponentInParent<TankBehavior>();
+        ref_TankBehavior = GetComponentInParent<TankBehavior>();
     }
-
 
     void Update()
     {
-        if (transform.position.x > lastPosition.x + 0.001f) {
-            transform.Rotate(0, 0, -refTankBehavior.speed * 20 * Time.deltaTime);
-        }
-        if (transform.position.x < lastPosition.x - 0.001f) {
-            transform.Rotate(0, 0, refTankBehavior.speed * 20 * Time.deltaTime);
+        if (isWheelGrounded == true)
+        {
+            if (transform.position.x > lastPosition.x + 0.001f) {
+                transform.Rotate(0, 0, -ref_TankBehavior.speed * 65 * Time.deltaTime);
+            }
+            if (transform.position.x < lastPosition.x - 0.001f) {
+                transform.Rotate(0, 0, ref_TankBehavior.speed * 65 * Time.deltaTime);
+            }
         }
     }
-    // pour que ce ne soit que lorsqu'on se déplace avec les boutons, faire référence aux roues
-    // dans tankBehavior et mettre dans la condition ce script de rotation
 
     void LateUpdate()
     {
         lastPosition.x = transform.position.x;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<AudioSource>() != null) {
+            isWheelGrounded = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<AudioSource>() != null) {
+            isWheelGrounded = false;
+        }
     }
 }

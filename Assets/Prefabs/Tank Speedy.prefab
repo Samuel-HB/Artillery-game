@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 8145714169043856145}
   - component: {fileID: 4807407637663403183}
   - component: {fileID: 3955861313830597101}
+  - component: {fileID: 7637804085708680925}
   m_Layer: 0
   m_Name: Wheel right
   m_TagString: Untagged
@@ -264,6 +265,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &7637804085708680925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265138027509847585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca32978ca1f6be64caf39a143b716f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelRotation
+  isWheelGrounded: 0
 --- !u!1 &4459051279415213384
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +381,7 @@ GameObject:
   - component: {fileID: 187818388671426934}
   - component: {fileID: 7486146640901679658}
   - component: {fileID: 5055395017179556785}
+  - component: {fileID: 3216846161801159561}
   m_Layer: 0
   m_Name: Wheel left
   m_TagString: Untagged
@@ -483,6 +498,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &3216846161801159561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939897530336072171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca32978ca1f6be64caf39a143b716f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelRotation
+  isWheelGrounded: 0
 --- !u!1 &6755417175439371077
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,10 +557,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Canon
   tankID: 0
+  weapons: {fileID: 0}
+  actualCanon: {fileID: 0}
   bullet: {fileID: 4044791374164343465, guid: c94e5348c2a9b4d4ebc813e5e7db8eaf, type: 3}
   firePoint: {fileID: 3524263623571074248}
   startTrajectoryPoint: {fileID: 4389413348117201366}
-  launchVelocity: 10
   point: {fileID: 6744962056003772560, guid: a8c96fd850ac97a4fa3d544cfea20769, type: 3}
   pointsNumber: 40
   pointSpace: 0.03
@@ -587,6 +616,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankMovement
   so_tank: {fileID: 11400000, guid: aafc18659c5ddc0448b29e6055a90900, type: 2}
   health: 0
+  speed: 0
+  ref_WheelRotationLeft: {fileID: 3216846161801159561}
+  ref_WheelRotationRight: {fileID: 7637804085708680925}
 --- !u!50 &7285618070476595809
 Rigidbody2D:
   serializedVersion: 5

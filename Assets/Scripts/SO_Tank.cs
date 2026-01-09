@@ -8,4 +8,9 @@ public class SO_Tank : ScriptableObject
     public int health = 100;
     public float movementSpeed = 0;
     public float airForce = 0;
+
+    public bool hasHeavyCanon = true;
+    public bool hasLightCanon = true;
 }
+
+
