@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private Canon ref_Canon;
-    TankBehavior ref_TankBehavior;
+    [SerializeField] private Transform explosion;
+    //private Canon ref_Canon;
+    //TankBehavior ref_TankBehavior;
 
     public int damage = 0;
 
@@ -18,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        ref_Canon = GetComponentInParent<Canon>();
+        //ref_Canon = GetComponentInParent<Canon>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -32,12 +33,14 @@ public class Bullet : MonoBehaviour
     {
         BattleManager.hasExplode = true;
         Destroy(gameObject);
+        explosion = Instantiate(explosion, transform.position, Quaternion.identity);
+        explosion.GetComponent<Explosion>().explosionDamage = damage;
 
-        if (collision.gameObject.GetComponent<TankBehavior>() != null)
-        {
-            ref_TankBehavior = collision.gameObject.GetComponent<TankBehavior>();
-            ref_TankBehavior.health -= damage;
-            Debug.Log(ref_TankBehavior.health);
-        }
+        //if (collision.gameObject.GetComponent<TankBehavior>() != null)
+        //{
+        //    ref_TankBehavior = collision.gameObject.GetComponent<TankBehavior>();
+        //    ref_TankBehavior.health -= damage;
+        //    Debug.Log(ref_TankBehavior.health);
+        //}
     }
 }

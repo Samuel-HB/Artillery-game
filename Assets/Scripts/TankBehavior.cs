@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TankBehavior : MonoBehaviour
 {
+    public bool hasBeenHit = false;
+
     private Canon refrenceToCanonScript;
     [SerializeField] public SO_Tank so_tank;
     public int health;

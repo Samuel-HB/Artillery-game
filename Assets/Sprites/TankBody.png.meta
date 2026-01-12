@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 2180b2f30a8103548828d212de7caf48
+guid: 7a395fef107f094439ccba1d2cdc772e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6475024594438670168
-    second: shuriken unity_0
-  - first:
-      213: -4853756553241048823
-    second: shuriken unity_1
+      213: -4999998267798588052
+    second: TankBody_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shuriken unity_0
+      name: TankBody_0
       rect:
         serializedVersion: 2
-        x: 49
-        y: 42
-        width: 293
-        height: 302
+        x: 0
+        y: 0
+        width: 429
+        height: 187
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a8b09000771426a0800000000000000
-      internalID: -6475024594438670168
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: shuriken unity_1
-      rect:
-        serializedVersion: 2
-        x: 247
-        y: 156
-        width: 105
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 909c7d1912ef3acb0800000000000000
-      internalID: -4853756553241048823
+      spriteID: c65fb4a01107c9ab0800000000000000
+      internalID: -4999998267798588052
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      shuriken unity_0: -6475024594438670168
-      shuriken unity_1: -4853756553241048823
+      TankBody_0: -4999998267798588052
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

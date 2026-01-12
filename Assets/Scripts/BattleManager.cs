@@ -35,10 +35,16 @@ public class BattleManager : MonoBehaviour
     private void Update()
     {
         DuringShooting();
+        //Debug.Log(state);
     }
 
     public void ChangeOfTurnFunction()
     {
+        foreach (Transform tank in tanks) // to allow again tanks to be hit (logic in the Explosion script)
+        {
+            tank.GetComponent<TankBehavior>().hasBeenHit = false;
+        }
+
         state = State.ChangeOfTurn;
         // attends 1 seconde pendant que la caméra se localise sur le joueur PlayerPlays
         if (playerPlays >= numberOfPlayer - 1) {
@@ -59,6 +65,15 @@ public class BattleManager : MonoBehaviour
             if (hasExplode == true)
             {
                 //attends x secondes puis
+                //int timer = 0;
+                //timer++;
+                //if (timer > 150)
+                //{
+                //    timer = 0;
+                //    hasExplode = false;
+                //    ChangeOfTurnFunction();
+                //}
+
                 hasExplode = false;
                 ChangeOfTurnFunction();
             }
