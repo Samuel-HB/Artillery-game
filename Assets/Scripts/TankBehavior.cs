@@ -7,17 +7,27 @@ public class TankBehavior : MonoBehaviour
     private Canon refrenceToCanonScript;
     [SerializeField] public SO_Tank so_tank;
     public int health;
+    public HealthBar healthBar;
     public float speed;
     private bool isGrounded = false;
 
     [SerializeField] private WheelRotation ref_WheelRotationLeft;
     [SerializeField] private WheelRotation ref_WheelRotationRight;
 
+    private Canvas canvas;
+    private Vector3 canvasRelativePos;
+
     void Start()
     {
         refrenceToCanonScript = GetComponentInChildren<Canon>();
-        health = so_tank.health;
         speed = so_tank.movementSpeed;
+
+        health = so_tank.health;
+        healthBar = GetComponentInChildren<HealthBar>();
+        canvasRelativePos = healthBar.transform.position;
+
+        canvas = healthBar.GetComponentInParent<Canvas>();
+        canvasRelativePos = canvas.transform.position;
     }
     
     void Update()
@@ -48,5 +58,8 @@ public class TankBehavior : MonoBehaviour
                 transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
             }
         }
+
+        canvas.transform.position = new Vector3(transform.position.x, (transform.position.y + canvasRelativePos.y));
+        canvas.transform.rotation = Quaternion.identity;
     }
 }

@@ -42,6 +42,8 @@ public class Canon : MonoBehaviour
         Vector2 canonPosition = transform.position;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = mousePosition - canonPosition;
+        //Vector2 mousePosition = - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //direction = mousePosition + canonPosition; // avec les signes inversés, ligne de tir inversée
         transform.right = direction;
 
         if (BattleManager.playerPlays == tankID && BattleManager.state == State.WaitingForInput)

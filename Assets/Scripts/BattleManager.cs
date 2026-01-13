@@ -30,6 +30,13 @@ public class BattleManager : MonoBehaviour
         TankInstantiate();
 
         state = State.WaitingForInput;
+
+        foreach (Transform tank in tanks)
+        {
+            tank.GetComponentInChildren<Canvas>().enabled = false;
+        } // only player who plays has visible its bar
+
+        tanks[playerPlays].GetComponentInChildren<Canvas>().enabled = true;
     }    
 
     private void Update()
@@ -54,6 +61,12 @@ public class BattleManager : MonoBehaviour
             playerPlays++;
         }
         state = State.WaitingForInput;
+
+        foreach (Transform tank in tanks) {
+            tank.GetComponentInChildren<Canvas>().enabled = false;
+        } // only player who plays has visible its bar
+
+        tanks[playerPlays].GetComponentInChildren<Canvas>().enabled = true;
     }
 
     public void DuringShooting()

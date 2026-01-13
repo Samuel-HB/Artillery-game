@@ -4,13 +4,20 @@ public class Explosion : MonoBehaviour
 {
     private CircleCollider2D coll;
     private float maxHitDistance;
-    public int explosionDamage = 0;
-    [SerializeField] private float pushForce = 3f;
+    private float minHitDistance = 2f;
+
+    public int maxExplosionDamage = 0;
+    private int minExplosionDamage = 1;
+
+    [SerializeField] private int maxPushForce = 400;
+    private int minPushForce = 1;
 
     private void Start()
     {
         coll = GetComponent<CircleCollider2D>();
         maxHitDistance = coll.radius;
+
+        minExplosionDamage = maxExplosionDamage / 3;
     }
 
     private void Update()
@@ -34,25 +41,34 @@ public class Explosion : MonoBehaviour
             float distance = Vector3.Distance(transform.position, tankTransform.position);
             Vector3 pushDirection = (transform.position - tankTransform.position).normalized;
 
-            if (distance < 2f ) {
-                distance = 2f;
+            if (distance < minHitDistance) {
+                distance = minHitDistance;
             }
             //if (distance > 6f)
             //{
             //    distance = 6f;
             //}
 
-            pushForce /= distance / maxHitDistance;
-            ref_TankBehavior.health -= (int)(explosionDamage / distance);
-            rbTank.AddForce(-pushDirection * pushForce);
+            //    n = (actualDistance - minDistance) / (maxDistance - minDistance)
+            //                   n * minDistance + (1 - n) * maxDistance
+            float n = (distance - minHitDistance) / (maxHitDistance - minHitDistance);
+            float damageResult = n * minExplosionDamage + (1 - n) * maxExplosionDamage;
+            float pushForceResult = n * minPushForce + (1 - n) * maxPushForce;
 
-            Debug.Log(ref_TankBehavior.health + "   distance: " + distance);
-            Debug.Log("pushForce: " + pushForce);
+            ref_TankBehavior.health -= (int)damageResult;
+            ref_TankBehavior.healthBar.UpdateHealthBar(ref_TankBehavior.so_tank.health, ref_TankBehavior.health);
+            rbTank.AddForce(-pushDirection * pushForceResult);
+
+            Debug.Log("health: " + ref_TankBehavior.health + " - distance: " + distance);
+            Debug.Log("maxExplosionDamage: " + maxExplosionDamage);
+            Debug.Log("pushForce: " + pushForceResult); // parfois valeurs négatives dans la console,
+            // peut etre parce que le pushforce est quand même calculé même quand il est en dessous
+            // de la distance minimale
 
             Destroy(gameObject);
             ref_TankBehavior.hasBeenHit = true;
         }
-        else if (collision.gameObject.tag == "ground")
+        else
         {
             Destroy(gameObject);
         }

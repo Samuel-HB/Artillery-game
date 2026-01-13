@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
         BattleManager.hasExplode = true;
         Destroy(gameObject);
         explosion = Instantiate(explosion, transform.position, Quaternion.identity);
-        explosion.GetComponent<Explosion>().explosionDamage = damage;
+        explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
 
         //if (collision.gameObject.GetComponent<TankBehavior>() != null)
         //{
