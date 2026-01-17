@@ -2,32 +2,40 @@ using UnityEngine;
 
 public class TankBehavior : MonoBehaviour
 {
-    public bool hasBeenHit = false;
-
     private Canon refrenceToCanonScript;
     [SerializeField] public SO_Tank so_tank;
     public int health;
     public HealthBar healthBar;
+    public FuelBar fuelBar;
     public float speed;
+    public float fuel = 0f;
     private bool isGrounded = false;
+
+    public bool hasBeenHit = false;
+    public bool isDefeated = false;
 
     [SerializeField] private WheelRotation ref_WheelRotationLeft;
     [SerializeField] private WheelRotation ref_WheelRotationRight;
 
-    private Canvas canvas;
+    private Canvas canvasHealth;
+    private Canvas canvasFuel;
     private Vector3 canvasRelativePos;
+
 
     void Start()
     {
         refrenceToCanonScript = GetComponentInChildren<Canon>();
-        speed = so_tank.movementSpeed;
 
+        fuel = so_tank.fuelCapacity;
+        speed = so_tank.movementSpeed; // la ligne était en dessous de ref Canon script
         health = so_tank.health;
-        healthBar = GetComponentInChildren<HealthBar>();
-        canvasRelativePos = healthBar.transform.position;
 
-        canvas = healthBar.GetComponentInParent<Canvas>();
-        canvasRelativePos = canvas.transform.position;
+        healthBar = GetComponentInChildren<HealthBar>();
+        fuelBar = GetComponentInChildren<FuelBar>();
+
+        canvasHealth = healthBar.GetComponentInParent<Canvas>();
+        canvasFuel = fuelBar.GetComponentInParent<Canvas>();
+        canvasRelativePos = canvasHealth.transform.position;
     }
     
     void Update()
@@ -48,18 +56,26 @@ public class TankBehavior : MonoBehaviour
             speed = so_tank.movementSpeed / 2;
         }
 
-        if (BattleManager.playerPlays == refrenceToCanonScript.tankID &&
+        if (BattleManager.playerPlays == refrenceToCanonScript.tankID && fuel > 0 &&
             BattleManager.state == State.WaitingForInput && isGrounded == true)
         {
             if (Input.GetKey(KeyCode.RightArrow)) {
                 transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
+                //fuel -= 0.005f - Time.deltaTime; // ajout de time
+                fuel -= 0.005f;
+                fuelBar.UpdateFuelBar(so_tank.fuelCapacity, fuel);
             }
             else if (Input.GetKey(KeyCode.LeftArrow)) {
                 transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
+                //fuel -= 0.005f - Time.deltaTime; // ajout de time
+                fuel -= 0.005f;
+                fuelBar.UpdateFuelBar(so_tank.fuelCapacity, fuel);
             }
         }
 
-        canvas.transform.position = new Vector3(transform.position.x, (transform.position.y + canvasRelativePos.y));
-        canvas.transform.rotation = Quaternion.identity;
+        canvasHealth.transform.position = new Vector3(transform.position.x, (transform.position.y + canvasRelativePos.y));
+        canvasHealth.transform.rotation = Quaternion.identity;
+        canvasFuel.transform.position = new Vector3(transform.position.x, (transform.position.y + canvasRelativePos.y + 0.6f));
+        canvasFuel.transform.rotation = Quaternion.identity;
     }
 }

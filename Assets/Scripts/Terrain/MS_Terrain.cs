@@ -1,26 +1,35 @@
+using System;
+using System.Diagnostics;
 using UnityEngine;
 
-[ExecuteAlways]
 public class MS_Terrain : MonoBehaviour
 {
-    [field:SerializeField]
+    // inspector
+    [field: SerializeField]
     public Vector2Int GridSize { get; private set; }
     public float gridResolution;
+    public float maxBrushSize;
+    public float brushChangeSizeSpeed;
+
+    // private
+    Vector3 mouseWorldPosition;
+    float currentRadius;
+    float Smallradius => currentRadius - gridResolution;
 
     MSVertex[,] grid;
     MSVertex[,] Grid
     {
         get
         {
-            if (grid == null || grid.GetLength(0) != GridSize.x || grid.GetLength(1) != GridSize.y) {
+            if (grid == null || grid.GetLength(0) != GridSize.x || grid.GetLength(1) != GridSize.y)
                 grid = CreateNewGrid(GridSize, gridResolution);
-            }
+
             return grid;
         }
     }
 
 
-    MSVertex[,] CreateNewGrid(Vector2Int gridSize,float gridResolution )
+    MSVertex[,] CreateNewGrid(Vector2Int gridSize, float gridResolution)
     {
         gridSize.x = Mathf.Max(gridSize.x, 2);
         gridSize.y = Mathf.Max(gridSize.y, 2);
@@ -40,39 +49,63 @@ public class MS_Terrain : MonoBehaviour
         return grid;
     }
 
+    void Start()
+    {
+        currentRadius = Mathf.Lerp(gridResolution, maxBrushSize, .5f);
+    }
+
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            Plane terrainPlane = new Plane(Vector3.back, Vector3.zero);
-            Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (terrainPlane.Raycast(clickRay, out float distance))
-            {
-                Vector3 hitPoint = clickRay.GetPoint(distance);
-                TryAndTgogleVertexState(hitPoint);
-            }
+        Plane terrainPlane = new Plane(Vector3.back, Vector3.zero);
+        Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (!terrainPlane.Raycast(clickRay, out float distance)) {
+            return; // si pas de raycast alors return
+        }
+        mouseWorldPosition = clickRay.GetPoint(distance);
+
+        float deltaRadius = ZeroSign(Input.mouseScrollDelta.y * brushChangeSizeSpeed);
+        currentRadius = Mathf.Clamp(currentRadius + deltaRadius, gridResolution, maxBrushSize);
+
+        if (Input.GetMouseButton(0)) {
+            ChangeTerrain(true);
+        }
+        if (Input.GetMouseButton(1)) {
+            ChangeTerrain(false);
         }
     }
 
-    private void TryAndTgogleVertexState(Vector3 mousePosition)
-    {
-        MSVertex closest = null;
-        float minDistance = float.MaxValue;
+    float ZeroSign(float f) => f == 0 ? 0 : (f > 0 ? 1 : -1);
 
+    private void ChangeTerrain(bool isAdding)
+    {
         for (int i = 0; i < Grid.GetLength(0); i++)
         {
-            for (int j = 0; j < Grid.GetLength(0); j++)
+            for (int j = 0; j < Grid.GetLength(1); j++)
             {
-                float distance = Vector3.Distance(mousePosition, Grid[i, j].position);
+                float distance = Vector3.Distance(mouseWorldPosition, Grid[i, j].position);
 
-                if (distance < minDistance)
+                if (distance > currentRadius) {
+                    continue;
+                }
+                if (distance < Smallradius)
                 {
-                    minDistance = distance;
-                    closest = Grid[i, j];
+                    Grid[i, j].fill = isAdding ? 1 : 0;
+                    continue;
+                }
+
+                // value closer to big radius => value tends to 0
+                // value closer to small radius => value tends to 1
+                float normalizedEdgeDistance = 1 - Mathf.InverseLerp(Smallradius, currentRadius, distance);
+
+                if (isAdding) {
+                    Grid[i, j].fill = Mathf.Max(normalizedEdgeDistance, Grid[i, j].fill);
+                }
+                else {
+                    Grid[i, j].fill = Mathf.Min(normalizedEdgeDistance, Grid[i, j].fill);
                 }
             }
         }
-        closest.active = !closest.active;
     }
 
     void OnValidate()
@@ -82,12 +115,15 @@ public class MS_Terrain : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(mouseWorldPosition, currentRadius);
+
         for (int i = 0; i < Grid.GetLength(0); i++)
         {
-            for (int j = 0; j < Grid.GetLength(j); j++)
+            for (int j = 0; j < Grid.GetLength(1); j++)
             {
-                Gizmos.color = Grid[i, j].active ? Color.green : Color.red;
-                Gizmos.DrawSphere(Grid[i, j].position, 0.05f);
+                Gizmos.color = Grid[i, j].Active ? Color.green : Color.red;
+                Gizmos.DrawSphere(Grid[i, j].position, .05f);
             }
         }
 
@@ -95,12 +131,12 @@ public class MS_Terrain : MonoBehaviour
 
         for (int i = 0; i < Grid.GetLength(0) - 1; i++)
         {
-            for (int j = 0; j < Grid.GetLength(j) - 1; j++)
+            for (int j = 0; j < Grid.GetLength(1) - 1; j++)
             {
-                MSVertex bl = Grid [i, j];
-                MSVertex tl = Grid [i, j + 1];
-                MSVertex tr = Grid [i + 1, j + 1];
-                MSVertex br = Grid [i + 1, j];
+                MSVertex bl = Grid[i, j];
+                MSVertex tl = Grid[i, j + 1];
+                MSVertex tr = Grid[i + 1, j + 1];
+                MSVertex br = Grid[i + 1, j];
 
                 DisplayCell(bl, tl, tr, br);
             }
@@ -111,58 +147,62 @@ public class MS_Terrain : MonoBehaviour
     {
         byte activationMask = 0;
 
-        activationMask |= (byte)((bl.active ? 1 : 0) << 0);
-        activationMask |= (byte)((tl.active ? 1 : 0) << 1);
-        activationMask |= (byte)((tr.active ? 1 : 0) << 2);
-        activationMask |= (byte)((br.active ? 1 : 0) << 3);
+        activationMask |= (byte)((bl.Active ? 1 : 0) << 0);
+        activationMask |= (byte)((tl.Active ? 1 : 0) << 1);
+        activationMask |= (byte)((tr.Active ? 1 : 0) << 2);
+        activationMask |= (byte)((br.Active ? 1 : 0) << 3);
 
+        Vector3 t = WeightedLerp(tl, tr);
+        Vector3 r = WeightedLerp(tr, br);
+        Vector3 b = WeightedLerp(br, bl);
+        Vector3 l = WeightedLerp(bl, tl);
         switch (activationMask)
         {
             case 0b_0000:
                 break;
             case 0b_0001:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(bl, br));
+                Gizmos.DrawLine(l, b);
                 break;
             case 0b_0010:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(tl, tr));
+                Gizmos.DrawLine(l, t);
                 break;
             case 0b_0011:
-                Gizmos.DrawLine(Mid(bl, br), Mid(tl, tr));
+                Gizmos.DrawLine(b, t);
                 break;
             case 0b_0100:
-                Gizmos.DrawLine(Mid(tl, tr), Mid(tr, br));
+                Gizmos.DrawLine(t, r);
                 break;
             case 0b_0101:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(bl, br));
-                Gizmos.DrawLine(Mid(tl, tr), Mid(tr, br));
+                Gizmos.DrawLine(l, b);
+                Gizmos.DrawLine(t, r);
                 break;
             case 0b_0110:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(tr, br));
+                Gizmos.DrawLine(l, r);
                 break;
             case 0b_0111:
-                Gizmos.DrawLine(Mid(bl, br), Mid(tr, br));
+                Gizmos.DrawLine(b, r);
                 break;
             case 0b_1000:
-                Gizmos.DrawLine(Mid(bl, br), Mid(tr, br));
+                Gizmos.DrawLine(b, r);
                 break;
             case 0b_1001:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(tr, br));
+                Gizmos.DrawLine(l, r);
                 break;
             case 0b_1010:
-                Gizmos.DrawLine(Mid(bl, br), Mid(tr, br));
-                Gizmos.DrawLine(Mid(bl, tl), Mid(tl, tr)); 
+                Gizmos.DrawLine(b, r);
+                Gizmos.DrawLine(l, t);
                 break;
             case 0b_1011:
-                Gizmos.DrawLine(Mid(tl, tr), Mid(tr, br));
+                Gizmos.DrawLine(t, r);
                 break;
             case 0b_1100:
-                Gizmos.DrawLine(Mid(bl, br), Mid(tl, tr));
+                Gizmos.DrawLine(b, t);
                 break;
             case 0b_1101:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(tl, tr));
+                Gizmos.DrawLine(l, t);
                 break;
             case 0b_1110:
-                Gizmos.DrawLine(Mid(bl, tl), Mid(bl, br));
+                Gizmos.DrawLine(l, b);
                 break;
             case 0b_1111:
                 break;
@@ -170,33 +210,31 @@ public class MS_Terrain : MonoBehaviour
 
         Vector3 Mid(MSVertex a, MSVertex b) => (a.position + b.position) / 2;
     }
+
+    Vector3 WeightedLerp(MSVertex a, MSVertex b)
+    {
+        MSVertex min = a.fill > b.fill ? b : a;
+        MSVertex max = a.fill > b.fill ? a : b;
+
+        float sumFill = a.fill + b.fill;
+
+        if (sumFill == 0)
+        {
+            return (a.position + b.position) / 2;
+        }
+        float lerp = min.fill / sumFill;
+        return Vector3.Lerp(min.position, max.position, lerp);
+    }
 }
 
 class MSVertex
 {
     public readonly Vector2 position;
-    public bool active;
+    public bool Active => fill == 1;    
+    public float fill;
 
     public MSVertex(int i, int j, float resolution)
     {
         position = new Vector2(i, j) * resolution;
     }
 }
-
-
-
-//public int a;
-//public int A
-//{
-//    get
-//    {
-//        return a;
-//    }
-//    set
-//    {
-//        a = value;
-//        if (a < 0) { 
-//            a = 0;
-//        }
-//    }
-//}

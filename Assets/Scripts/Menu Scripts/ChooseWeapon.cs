@@ -11,6 +11,7 @@ public class ChooseWeapon : MonoBehaviour
 
     [SerializeField] private Button HeavyCanonButton;
     [SerializeField] private Button LightCanonButton;
+    [SerializeField] private Button ProjectionCanonButton;
     private List<Button> buttons;
     TankBehavior ref_TankBehavior;
 
@@ -19,6 +20,7 @@ public class ChooseWeapon : MonoBehaviour
         buttons = new List<Button>();
         buttons.Add(HeavyCanonButton);
         buttons.Add(LightCanonButton);
+        buttons.Add(ProjectionCanonButton);
 
         for (int i = 0; i < buttons.Count; i++) {
             DisableButton(buttons[i]);
@@ -46,7 +48,7 @@ public class ChooseWeapon : MonoBehaviour
                 HeavyCanonButton.interactable = false;
                 HeavyCanonButton.image.color = Color.gray;
             }
-
+            // - - -
             if (ref_TankBehavior.so_tank.hasLightCanon == true)
             {
                 LightCanonButton.interactable = true;
@@ -55,6 +57,17 @@ public class ChooseWeapon : MonoBehaviour
             {
                 LightCanonButton.interactable = false;
                 LightCanonButton.image.color = Color.gray;
+            }
+            // - - -
+            if (ref_TankBehavior.so_tank.hasProjectionCanon == true)
+            {
+                ProjectionCanonButton.interactable = true;
+                ProjectionCanonButton.image.color = Color.white;
+            }
+            else
+            {
+                ProjectionCanonButton.interactable = false;
+                ProjectionCanonButton.image.color = Color.gray;
             }
         }
         else if (Input.GetKeyDown(KeyCode.H) && BattleManager.state == State.WaitingForInput)
@@ -91,5 +104,11 @@ public class ChooseWeapon : MonoBehaviour
     {
         Canon ref_Canon = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<Canon>();
         ref_Canon.ChangeCanon(ref_Canon.weapons.lightCanon);
+    }
+
+    public void ProjectionCanon()
+    {
+        Canon ref_Canon = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<Canon>();
+        ref_Canon.ChangeCanon(ref_Canon.weapons.projectionCanon);
     }
 }

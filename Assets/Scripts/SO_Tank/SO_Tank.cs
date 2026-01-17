@@ -11,6 +11,9 @@ public class SO_Tank : ScriptableObject
 
     public bool hasHeavyCanon = true;
     public bool hasLightCanon = true;
+    public bool hasProjectionCanon = true;
+
+    public float fuelCapacity = 0f;
 }
 
 

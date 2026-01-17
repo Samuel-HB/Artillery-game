@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class Explosion : MonoBehaviour
 {
@@ -12,8 +14,12 @@ public class Explosion : MonoBehaviour
     [SerializeField] private int maxPushForce = 400;
     private int minPushForce = 1;
 
+
+
     private void Start()
     {
+        BattleManager.explosionJustOver = false;
+
         coll = GetComponent<CircleCollider2D>();
         maxHitDistance = coll.radius;
 
@@ -23,6 +29,30 @@ public class Explosion : MonoBehaviour
     private void Update()
     {
     }
+
+    private void MapCollision()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 1 + i,
+                                                                    (int)(transform.position.y) - 1));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 1 + i,
+                                                                    (int)(transform.position.y)));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x),
+                                                                    (int)(transform.position.y) + 1));
+        }
+        TileMapInterraction.isStartedTileExplosion = true;
+        Destroy(gameObject);
+        BattleManager.explosionJustOver = true;
+    }
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -59,18 +89,34 @@ public class Explosion : MonoBehaviour
             ref_TankBehavior.healthBar.UpdateHealthBar(ref_TankBehavior.so_tank.health, ref_TankBehavior.health);
             rbTank.AddForce(-pushDirection * pushForceResult);
 
+
+            if (ref_TankBehavior.health <= 0) {
+                ref_TankBehavior.isDefeated = true;
+            }
+
+
             Debug.Log("health: " + ref_TankBehavior.health + " - distance: " + distance);
-            Debug.Log("maxExplosionDamage: " + maxExplosionDamage);
-            Debug.Log("pushForce: " + pushForceResult); // parfois valeurs négatives dans la console,
-            // peut etre parce que le pushforce est quand même calculé même quand il est en dessous
-            // de la distance minimale
+            // parfois valeurs négatives dans la console, peut etre parce que le pushforce
+            // est quand même calculé même quand il est en dessous de la distance minimale
 
             Destroy(gameObject);
             ref_TankBehavior.hasBeenHit = true;
+            BattleManager.explosionJustOver = true; // au lieu de mettre ça en true direct
+            // mettre un timer qui s'enclenche à ce moment là, le temps que la caméra se repositionne et s'arrête lentement
+            // avant de mettre en false
+
+            // de toute manière changer cette variable pour une qui ne s'enclenche que lorsque le tour est fini
+            // ce qui peut arriver après un tir, ou même avant
+
+            MapCollision();
+
         }
         else
         {
             Destroy(gameObject);
+            BattleManager.explosionJustOver = true;
+
+            MapCollision();
         }
     }
 }

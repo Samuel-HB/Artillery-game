@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Canon : MonoBehaviour
 {
-    [SerializeField] public int tankID = 0;
+    public int tankID = 0;
 
     private GameObject weaponsGO;
     public Weapons weapons;
     public SO_SimpleCanon actualCanon;
 
-    public GameObject bullet;
+    [SerializeField] public GameObject bullet;
     public Transform firePoint;
     public Transform startTrajectoryPoint;
     private Vector2 direction;
@@ -54,7 +54,8 @@ public class Canon : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameObject _bullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
+                GameObject _bullet = actualCanon.bullet;
+                _bullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
                 _bullet.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * actualCanon.launchVelocity;
                 Bullet ref_Bullet = _bullet.GetComponent<Bullet>();
                 ref_Bullet.damage = actualCanon.damage;

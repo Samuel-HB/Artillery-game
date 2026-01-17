@@ -6,7 +6,6 @@ public class WheelRotation : MonoBehaviour
     private Vector3 lastPosition;
     public bool isWheelGrounded = false;
 
-
     void Start()
     {
         ref_TankBehavior = GetComponentInParent<TankBehavior>();
@@ -35,11 +34,13 @@ public class WheelRotation : MonoBehaviour
         if (collision.gameObject.GetComponent<AudioSource>() != null) {
             isWheelGrounded = true;
         }
+        //isWheelGrounded = true;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<AudioSource>() != null) {
             isWheelGrounded = false;
         }
+        //isWheelGrounded = true;
     }
 }

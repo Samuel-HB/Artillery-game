@@ -16,3 +16,7 @@ MonoBehaviour:
   health: 120
   movementSpeed: 3.25
   airForce: 0
+  hasHeavyCanon: 1
+  hasLightCanon: 1
+  hasProjectionCanon: 0
+  fuelCapacity: 15

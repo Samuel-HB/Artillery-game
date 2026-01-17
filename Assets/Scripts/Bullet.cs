@@ -4,22 +4,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private Transform explosion;
-    //private Canon ref_Canon;
-    //TankBehavior ref_TankBehavior;
-
     public int damage = 0;
-
     public float timeBeforeDestroy = 3f;
     Rigidbody2D rb;
-
-    //void Awake()
-    //{
-    //    Destroy(gameObject, timeBeforeDestroy);
-    //}
+    // in projects settings layer 6 and 7 can't interract with each other
 
     private void Start()
     {
-        //ref_Canon = GetComponentInParent<Canon>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -29,18 +20,27 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        BattleManager.hasExplode = true;
-        Destroy(gameObject);
-        explosion = Instantiate(explosion, transform.position, Quaternion.identity);
-        explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
+        BlackBoardTank blackBoardTank = collision.gameObject.GetComponentInParent<BlackBoardTank>();
 
-        //if (collision.gameObject.GetComponent<TankBehavior>() != null)
-        //{
-        //    ref_TankBehavior = collision.gameObject.GetComponent<TankBehavior>();
-        //    ref_TankBehavior.health -= damage;
-        //    Debug.Log(ref_TankBehavior.health);
-        //}
+        if (blackBoardTank == null)
+        {
+            BattleManager.hasExplode = true;
+            Destroy(gameObject);
+            explosion = Instantiate(explosion, transform.position, Quaternion.identity);
+            explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
+        }
+        else if (blackBoardTank.pivotCanon.tankID == BattleManager.playerPlays) {
+            //nothing
+        }
+        else if (blackBoardTank.pivotCanon.tankID != BattleManager.playerPlays)
+        {
+            BattleManager.hasExplode = true;
+            Destroy(gameObject);
+            explosion = Instantiate(explosion, transform.position, Quaternion.identity);
+            explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
+        }
     }
 }
