@@ -56,8 +56,11 @@ public class TankBehavior : MonoBehaviour
             speed = so_tank.movementSpeed / 2;
         }
 
-        if (BattleManager.playerPlays == refrenceToCanonScript.tankID && fuel > 0 &&
-            BattleManager.state == State.WaitingForInput && isGrounded == true)
+        //if (BattleManager.playerPlays == refrenceToCanonScript.tankID && fuel > 0 &&
+        //BattleManager.state == State.WaitingForInput && isGrounded == true)
+
+        if (BattleManager.playerPlays == refrenceToCanonScript.tankID && fuel > 0 && isGrounded == true &&
+            (BattleManager.state == State.WaitingForInput || BattleManager.state == State.WaitingForInputAfterAttack))
         {
             if (Input.GetKey(KeyCode.RightArrow)) {
                 transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;

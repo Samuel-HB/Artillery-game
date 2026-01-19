@@ -35,21 +35,31 @@ public class Explosion : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 1 + i,
+                                                                    (int)(transform.position.y) - 2));
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 2 + i,
                                                                     (int)(transform.position.y) - 1));
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 2 + i,
+                                                                    (int)(transform.position.y)));
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 2 + i,
+                                                                    (int)(transform.position.y) + 1));
         }
         for (int i = 0; i < 3; i++)
         {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 1 + i,
-                                                                    (int)(transform.position.y)));
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x),
-                                                                    (int)(transform.position.y) + 1));
+                                                                    (int)(transform.position.y) + 2));
         }
         TileMapInterraction.isStartedTileExplosion = true;
-        Destroy(gameObject);
-        BattleManager.explosionJustOver = true;
+        //Destroy(gameObject);
+        //BattleManager.explosionJustOver = true;
     }
 
 
@@ -62,9 +72,6 @@ public class Explosion : MonoBehaviour
             // so changed variable of each tank when hit and check it, to only hit once
         {
             TankBehavior ref_TankBehavior = collision.GetComponentInParent<TankBehavior>();
-            // find the parent gameObject desired by the unic component TankBehavior,
-            // wich he is the only one to have,
-            // and getComponnent from this GameObject and not the others
 
             Rigidbody2D rbTank = ref_TankBehavior.GetComponent<Rigidbody2D>();
             Transform tankTransform = ref_TankBehavior.GetComponent<Transform>();
@@ -101,7 +108,8 @@ public class Explosion : MonoBehaviour
 
             Destroy(gameObject);
             ref_TankBehavior.hasBeenHit = true;
-            BattleManager.explosionJustOver = true; // au lieu de mettre ça en true direct
+            BattleManager.explosionJustOver = true;
+            // au lieu de mettre ça en true direct
             // mettre un timer qui s'enclenche à ce moment là, le temps que la caméra se repositionne et s'arrête lentement
             // avant de mettre en false
 
@@ -109,7 +117,6 @@ public class Explosion : MonoBehaviour
             // ce qui peut arriver après un tir, ou même avant
 
             MapCollision();
-
         }
         else
         {

@@ -16,8 +16,12 @@ public class BattleManager : MonoBehaviour
 
     public static State state;
     public static int playerPlays = 0;
-    public static bool hasExplode = false;
+    //public static bool hasExplode = false;
     public static bool explosionJustOver = false;
+
+    private bool explosionDone = false;
+    public static bool isTurnOver = false;
+
     private bool isGameOver = false;
     private int numberOfTankDefeated = 0;
 
@@ -70,15 +74,33 @@ public class BattleManager : MonoBehaviour
 
     }    
 
-    private void Update() // il faudrait que le changement de tour ne se fasse qu'après l'explosion (quand les dégâys ont été mis)
+    private void Update()
     {
-        if (explosionJustOver == true && state == State.ShotInProgress) // changer le explosionJustOver pour
-            // une autre varaible qui permet la fin du tour autrement que par un tir
+        // changer le explosionJustOver pour
+        // une autre varaible qui permet la fin du tour autrement que par un tir
+
+        if (explosionJustOver == true)
         {
             explosionJustOver = false;
+            AfterAttack();
             CheckForVictory();
+            state = State.WaitingForInputAfterAttack;
+            explosionDone = true;
+        }
 
-            if (isGameOver == false) { // condition to not have no playerplays at all and all tanks destroy
+        if (explosionDone == true && state == State.WaitingForInputAfterAttack && tanks[playerPlays].GetComponent<TankBehavior>().fuel <= 0) {
+            isTurnOver = true;
+        }
+
+        if (isTurnOver == true) 
+        {
+            explosionDone = false;
+            isTurnOver = false;
+            //explosionJustOver = false;
+            //CheckForVictory();
+
+            // condition to not have no playerplays at all and all tanks destroy
+            if (isGameOver == false) {
                 ChangeOfTurnFunction();
             }
         }
@@ -109,14 +131,21 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void AfterAttack()
+    {
+        for (int i = 0; i < numberOfPlayer; i++) {             
+            tanks[i].GetComponent<TankBehavior>().hasBeenHit = false;
+        }
+    }
+
     public void ChangeOfTurnFunction()
     {
         // attends 1 seconde pendant que la caméra se localise sur le joueur PlayerPlays
 
         // to allow again tanks to be hit (logic in the Explosion script) 
-        for (int i = 0; i < numberOfPlayer; i++) {             
-            tanks[i].GetComponent<TankBehavior>().hasBeenHit = false;
-        }
+        //for (int i = 0; i < numberOfPlayer; i++) {             
+        //    tanks[i].GetComponent<TankBehavior>().hasBeenHit = false;
+        //}
 
         state = State.ChangeOfTurn;
 
@@ -154,10 +183,12 @@ public class BattleManager : MonoBehaviour
     {
         if (state == State.ShotInProgress)
         {
-            tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false; // new line
+            // commented line (hide fuel bar during attack)
+
+            //tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false; // new line
             // caméra suivant le tir pendant x seconde (temps varaible selon le fx du projectile)
 
-            if (hasExplode == true)
+            //if (hasExplode == true)
             {
                 //attends x secondes puis
                 //int timer = 0;
@@ -169,7 +200,7 @@ public class BattleManager : MonoBehaviour
                 //    ChangeOfTurnFunction();
                 //}
 
-                hasExplode = false;
+                //hasExplode = false;
                 //ChangeOfTurnFunction();
 
                 //Change of turn only after explosion and not hit

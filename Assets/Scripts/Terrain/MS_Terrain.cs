@@ -207,8 +207,8 @@ public class MS_Terrain : MonoBehaviour
             case 0b_1111:
                 break;
         }
-
-        Vector3 Mid(MSVertex a, MSVertex b) => (a.position + b.position) / 2;
+        //commented line
+        //Vector3 Mid(MSVertex a, MSVertex b) => (a.position + b.position) / 2;
     }
 
     Vector3 WeightedLerp(MSVertex a, MSVertex b)

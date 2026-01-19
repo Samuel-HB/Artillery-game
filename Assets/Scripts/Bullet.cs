@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
 
         if (blackBoardTank == null)
         {
-            BattleManager.hasExplode = true;
+            //BattleManager.hasExplode = true;
             Destroy(gameObject);
             explosion = Instantiate(explosion, transform.position, Quaternion.identity);
             explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
         }
         else if (blackBoardTank.pivotCanon.tankID != BattleManager.playerPlays)
         {
-            BattleManager.hasExplode = true;
+            //BattleManager.hasExplode = true;
             Destroy(gameObject);
             explosion = Instantiate(explosion, transform.position, Quaternion.identity);
             explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
