@@ -30,6 +30,8 @@ public class BattleManager : MonoBehaviour
 
     public static int layerWithoutBulletCollision;
 
+    [SerializeField] CameraContainer ref_CameraContainer;
+
 
 
     // voir pour une sorte de time.deltaTime avec la jauge d'endurance, qui semble dépendre
@@ -177,6 +179,20 @@ public class BattleManager : MonoBehaviour
         if (tanks[playerPlays].GetComponent<TankBehavior>().isDefeated == true) {
             ChangeOfTurnFunction();
         }
+
+
+        if (playerPlays == 0) {
+            CameraManager.SwitchCamera(ref_CameraContainer.cam1);
+        }
+        if (playerPlays == 1) {
+            CameraManager.SwitchCamera(ref_CameraContainer.cam2);
+        }
+        if (playerPlays == 2) {
+            CameraManager.SwitchCamera(ref_CameraContainer.cam3);
+        }
+        if (playerPlays == 3) {
+            CameraManager.SwitchCamera(ref_CameraContainer.cam4);
+        }
     }
 
     public void DuringShooting()
@@ -271,6 +287,19 @@ public class BattleManager : MonoBehaviour
 
             Canon refrenceToCanonScript = tank.GetComponentInChildren<Canon>();
             refrenceToCanonScript.tankID = i;
+
+            if (i == 0) {
+                tank.name = "Player1";
+            }
+            if (i == 1) {
+                tank.name = "Player2";
+            }
+            if (i == 2) {
+                tank.name = "Player3";
+            }
+            if (i == 3) {
+                tank.name = "Player4";
+            }
         }
     }    
 
