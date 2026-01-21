@@ -4,34 +4,29 @@ using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
+    [SerializeField] TankInstanciation ref_TankInstanciation;
     [SerializeField] private Transform tank_game;
     public static List<Transform> tanks;
-    private Vector3 tankFirstPosition = new Vector3(0, 0);
     private TankBehavior ref_Tank;
-    private float initialHigh = 0.1f;
 
+    public static State state;
     public static int numberOfPlayer = 2;
     public static int maxNumberOfPlayer = 4;
     public static int minNumberOfPlayer = 2;
-
-    public static State state;
     public static int playerPlays = 0;
-    //public static bool hasExplode = false;
-    public static bool explosionJustOver = false;
 
+    public static int layerWithoutBulletCollision;
+    public static bool explosionJustOver = false;
     private bool explosionDone = false;
     public static bool isTurnOver = false;
-
     private bool isGameOver = false;
     private int numberOfTankDefeated = 0;
 
-
     private int timeSpendSinceStart; // new line
 
-    public static int layerWithoutBulletCollision;
-
     [SerializeField] CameraContainer ref_CameraContainer;
-
+    [SerializeField] CameraManager ref_CameraManager;
+    private bool isBulletFinded = false;
 
 
     // voir pour une sorte de time.deltaTime avec la jauge d'endurance, qui semble dépendre
@@ -39,18 +34,12 @@ public class BattleManager : MonoBehaviour
     // ou FixedUpdate
 
 
-    // mettre les jauges d'endurence et de vitalité dans une fonction appelé au start et au change of turn
-
-
-
-
     private void Start()
     {
         layerWithoutBulletCollision = LayerMask.NameToLayer("ActualPlayer");
-        //layerWithoutBulletCollision = 6;
-
         tanks = new List<Transform>();
-        TankInstantiate();
+
+        ref_TankInstanciation.TankInstantiate();
 
 
         // new line
@@ -71,19 +60,26 @@ public class BattleManager : MonoBehaviour
         }
         tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = true;
 
-
         BulletCannotInterractWithShooter();
 
-    }    
+        ref_CameraManager.ChangeCamera();
+    }
 
     private void Update()
     {
-        // changer le explosionJustOver pour
-        // une autre varaible qui permet la fin du tour autrement que par un tir
+        Debug.Log(state);
+
+        if (state == State.ShotInProgress && isBulletFinded == false)
+        {
+            ref_CameraManager.FindBullet();
+            isBulletFinded = true;
+        }
 
         if (explosionJustOver == true)
         {
             explosionJustOver = false;
+            isBulletFinded = false;
+            ref_CameraManager.ChangeCamera(); // ajouter un temps de latence avant de remettre la caméra sur le joueur
             AfterAttack();
             CheckForVictory();
             state = State.WaitingForInputAfterAttack;
@@ -93,24 +89,22 @@ public class BattleManager : MonoBehaviour
         if (explosionDone == true && state == State.WaitingForInputAfterAttack && tanks[playerPlays].GetComponent<TankBehavior>().fuel <= 0) {
             isTurnOver = true;
         }
+        else if (tanks[playerPlays].GetComponent<TankBehavior>().health <= 0) {
+            isTurnOver = true;
+        }
 
-        if (isTurnOver == true) 
+        if (isTurnOver == true)
         {
             explosionDone = false;
             isTurnOver = false;
-            //explosionJustOver = false;
-            //CheckForVictory();
 
             // condition to not have no playerplays at all and all tanks destroy
-            if (isGameOver == false) {
+            if (isGameOver == false)
+            {
                 ChangeOfTurnFunction();
             }
         }
-
-        DuringShooting();
-    }
-
-    
+    }    
 
     private void CheckForVictory()
     {
@@ -159,12 +153,11 @@ public class BattleManager : MonoBehaviour
         }
         state = State.WaitingForInput;
 
-
         foreach (Transform tank in tanks)
         {
             ref_Tank = tank.GetComponent<TankBehavior>();
             ref_Tank.fuel = ref_Tank.so_tank.fuelCapacity;
-            ref_Tank.fuelBar.UpdateFuelBar(ref_Tank.so_tank.fuelCapacity, ref_Tank.fuel);
+            ref_Tank.blackBoardTank.fuelBar.UpdateFuelBar(ref_Tank.so_tank.fuelCapacity, ref_Tank.fuel);
         }
 
         foreach (Transform tank in tanks) {
@@ -172,56 +165,13 @@ public class BattleManager : MonoBehaviour
         }
         tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = true;
 
-
         BulletCannotInterractWithShooter();
-
 
         if (tanks[playerPlays].GetComponent<TankBehavior>().isDefeated == true) {
             ChangeOfTurnFunction();
         }
 
-
-        if (playerPlays == 0) {
-            CameraManager.SwitchCamera(ref_CameraContainer.cam1);
-        }
-        if (playerPlays == 1) {
-            CameraManager.SwitchCamera(ref_CameraContainer.cam2);
-        }
-        if (playerPlays == 2) {
-            CameraManager.SwitchCamera(ref_CameraContainer.cam3);
-        }
-        if (playerPlays == 3) {
-            CameraManager.SwitchCamera(ref_CameraContainer.cam4);
-        }
-    }
-
-    public void DuringShooting()
-    {
-        if (state == State.ShotInProgress)
-        {
-            // commented line (hide fuel bar during attack)
-
-            //tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false; // new line
-            // caméra suivant le tir pendant x seconde (temps varaible selon le fx du projectile)
-
-            //if (hasExplode == true)
-            {
-                //attends x secondes puis
-                //int timer = 0;
-                //timer++;
-                //if (timer > 150)
-                //{
-                //    timer = 0;
-                //    hasExplode = false;
-                //    ChangeOfTurnFunction();
-                //}
-
-                //hasExplode = false;
-                //ChangeOfTurnFunction();
-
-                //Change of turn only after explosion and not hit
-            }
-        }
+        ref_CameraManager.ChangeCamera();
     }
 
     private void BulletCannotInterractWithShooter()
@@ -236,72 +186,6 @@ public class BattleManager : MonoBehaviour
         tanks[playerPlays].GetComponent<BlackBoardTank>().wheelLeft.layer = layerWithoutBulletCollision;
         tanks[playerPlays].GetComponent<BlackBoardTank>().wheelRight.layer = layerWithoutBulletCollision;
     }
-
-    //private void TankInstantiate(int x1, int y1, int x2, int y2, int xx1, int yy1, int xx2, int yy2, int xx3, int yy3,
-    //                             int xxx1, int yyy1, int xxx2, int yyy2, int xxx3, int yyy3, int xxx4, int yyy4)
-    private void TankInstantiate()
-    {
-        for (int i = 0; i < numberOfPlayer; i++)
-        {
-            switch (numberOfPlayer)
-            {
-                case 2:
-                    if (i == 0) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(-20, initialHigh);
-                    }
-                    else {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(20, initialHigh);
-                    }
-                    break;
-
-                case 3:
-                    if (i == 0) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(-20, initialHigh);
-                    }
-                    else if (i == 1) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(20, initialHigh);
-                    }
-                    else {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(0, initialHigh);
-                    }
-                    break;
-
-                case 4:
-                    if (i == 0) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(-20, initialHigh);
-                    }
-                    else if (i == 1) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(20, initialHigh);
-                    }
-                    else if (i == 2) {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(-8, initialHigh);
-                    }
-                    else {
-                        tankFirstPosition = SelectionMenu.tanks_game[i].transform.position + new Vector3(8, initialHigh);
-                    }
-                    break;
-            }
-
-            Transform tank = Instantiate(SelectionMenu.tanks_game[i], tankFirstPosition, Quaternion.identity);
-            tanks.Add(tank); //pas utile
-
-            Canon refrenceToCanonScript = tank.GetComponentInChildren<Canon>();
-            refrenceToCanonScript.tankID = i;
-
-            if (i == 0) {
-                tank.name = "Player1";
-            }
-            if (i == 1) {
-                tank.name = "Player2";
-            }
-            if (i == 2) {
-                tank.name = "Player3";
-            }
-            if (i == 3) {
-                tank.name = "Player4";
-            }
-        }
-    }    
 
     private void Victory()
     {

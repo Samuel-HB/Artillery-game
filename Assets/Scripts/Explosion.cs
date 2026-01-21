@@ -1,20 +1,14 @@
 using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.Tilemaps;
 
 public class Explosion : MonoBehaviour
 {
     private CircleCollider2D coll;
     private float maxHitDistance;
     private float minHitDistance = 2f;
-
     public int maxExplosionDamage = 0;
     private int minExplosionDamage = 1;
-
     [SerializeField] private int maxPushForce = 400;
     private int minPushForce = 1;
-
-
 
     private void Start()
     {
@@ -22,15 +16,10 @@ public class Explosion : MonoBehaviour
 
         coll = GetComponent<CircleCollider2D>();
         maxHitDistance = coll.radius;
-
         minExplosionDamage = maxExplosionDamage / 3;
     }
 
-    private void Update()
-    {
-    }
-
-    private void MapCollision()
+    private void MapCollision() //destroy map in a circlar zone
     {
         for (int i = 0; i < 3; i++)
         {
@@ -58,11 +47,7 @@ public class Explosion : MonoBehaviour
                                                                     (int)(transform.position.y) + 2));
         }
         TileMapInterraction.isStartedTileExplosion = true;
-        //Destroy(gameObject);
-        //BattleManager.explosionJustOver = true;
     }
-
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -93,7 +78,7 @@ public class Explosion : MonoBehaviour
             float pushForceResult = n * minPushForce + (1 - n) * maxPushForce;
 
             ref_TankBehavior.health -= (int)damageResult;
-            ref_TankBehavior.healthBar.UpdateHealthBar(ref_TankBehavior.so_tank.health, ref_TankBehavior.health);
+            ref_TankBehavior.blackBoardTank.healthBar.UpdateHealthBar(ref_TankBehavior.so_tank.health, ref_TankBehavior.health);
             rbTank.AddForce(-pushDirection * pushForceResult);
 
 

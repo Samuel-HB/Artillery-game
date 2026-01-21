@@ -1,13 +1,11 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private Transform explosion;
+    private Rigidbody2D rb;
     public int damage = 0;
-    public float timeBeforeDestroy = 3f;
-    Rigidbody2D rb;
-    // in projects settings layer 6 and 7 can't interract with each other
+    //public float timeBeforeDestroy = 3f;
 
     private void Start()
     {
@@ -21,23 +19,22 @@ public class Bullet : MonoBehaviour
     }
 
 
+    // in projects settings layer 6 and 7 can't interract with each other
     private void OnCollisionEnter2D(Collision2D collision)
     {
         BlackBoardTank blackBoardTank = collision.gameObject.GetComponentInParent<BlackBoardTank>();
 
         if (blackBoardTank == null)
         {
-            //BattleManager.hasExplode = true;
             Destroy(gameObject);
             explosion = Instantiate(explosion, transform.position, Quaternion.identity);
             explosion.GetComponent<Explosion>().maxExplosionDamage = damage;
         }
-        else if (blackBoardTank.pivotCanon.tankID == BattleManager.playerPlays) {
+        else if (blackBoardTank.ref_Canon.tankID == BattleManager.playerPlays) {
             //nothing
         }
-        else if (blackBoardTank.pivotCanon.tankID != BattleManager.playerPlays)
+        else if (blackBoardTank.ref_Canon.tankID != BattleManager.playerPlays)
         {
-            //BattleManager.hasExplode = true;
             Destroy(gameObject);
             explosion = Instantiate(explosion, transform.position, Quaternion.identity);
             explosion.GetComponent<Explosion>().maxExplosionDamage = damage;

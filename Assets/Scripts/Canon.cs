@@ -8,7 +8,6 @@ public class Canon : MonoBehaviour
     public Weapons weapons;
     public SO_SimpleCanon actualCanon;
 
-    [SerializeField] public GameObject bullet;
     public Transform firePoint;
     public Transform startTrajectoryPoint;
     private Vector2 direction;
@@ -40,10 +39,12 @@ public class Canon : MonoBehaviour
     void Update()
     {
         Vector2 canonPosition = transform.position;
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = mousePosition - canonPosition;
-        //Vector2 mousePosition = - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //direction = mousePosition + canonPosition; // avec les signes inversés, ligne de tir inversée
+        if (tankID == BattleManager.playerPlays)
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            direction = mousePosition - canonPosition;
+        }
+
         transform.right = direction;
 
         if (BattleManager.playerPlays == tankID && BattleManager.state == State.WaitingForInput)
@@ -54,10 +55,10 @@ public class Canon : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameObject _bullet = actualCanon.bullet;
-                _bullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
-                _bullet.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * actualCanon.launchVelocity;
-                Bullet ref_Bullet = _bullet.GetComponent<Bullet>();
+                GameObject bullet = actualCanon.bullet;
+                bullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
+                bullet.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * actualCanon.launchVelocity;
+                Bullet ref_Bullet = bullet.GetComponent<Bullet>();
                 ref_Bullet.damage = actualCanon.damage;
                 // est-ce que ça va bien prendre de nouvelles bullets à chaque fois ?
 

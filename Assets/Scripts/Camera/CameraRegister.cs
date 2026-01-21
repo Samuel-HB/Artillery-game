@@ -22,6 +22,11 @@ public class CameraRegister : MonoBehaviour
     //    }
     //}
 
+    private void Start() // new (start)
+    {
+        actualCamera = GetComponent<CinemachineCamera>();
+    }
+
     int timer = 0;
     private void Update()
     {
@@ -29,7 +34,7 @@ public class CameraRegister : MonoBehaviour
 
         if (timer == 1)
         {
-            actualCamera = GetComponent<CinemachineCamera>();
+            //actualCamera = GetComponent<CinemachineCamera>();
 
             player = GameObject.Find(playerName);
 
@@ -40,6 +45,14 @@ public class CameraRegister : MonoBehaviour
             }
         }
     }
+
+    //private void FindBullet()
+    //{
+    //    Transform transformBullet = GameObject.FindFirstObjectByType<Bullet>().transform;
+    //    actualCamera.Target.TrackingTarget = transformBullet;
+    //    //CameraContainer.camShoot
+    //    //CameraManager.SwitchCamera(ref_CameraContainer.cam4);
+    //}
 
     private void OnEnable()
     {
