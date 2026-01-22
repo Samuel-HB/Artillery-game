@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 506008518128675247}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 0.75, y: -0.6, z: -1}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalPosition: {x: 0.9, y: -0.575, z: -1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2106646806952757638}
@@ -569,7 +569,7 @@ Transform:
   m_GameObject: {fileID: 1740687132720798922}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.665, y: 0.012, z: 0}
+  m_LocalPosition: {x: -0.665, y: 0.012, z: -0.5}
   m_LocalScale: {x: 1.35, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -737,8 +737,8 @@ Transform:
   m_GameObject: {fileID: 2454399055029702175}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.75, y: -0.6, z: -1}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalPosition: {x: -0.9, y: -0.575, z: -1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 818700140340431649}
@@ -1336,17 +1336,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlackBoardTank
   ref_Canon: {fileID: 2966195769199570788}
   tankBody: {fileID: 7930713699205773651}
+  ref_TankBody: {fileID: 8275589203055252174}
   wheelLeft: {fileID: 2454399055029702175}
   wheelRight: {fileID: 506008518128675247}
   triggerLeft: {fileID: 4199458660014726247}
   triggerRight: {fileID: 1878257756687393472}
-  ref_TankBody: {fileID: 8275589203055252174}
+  wheelMovementLeft: {fileID: 7832176667483110436}
+  wheelMovementRight: {fileID: 1288193949228553041}
   healthBar: {fileID: 6554335609026134352}
   fuelBar: {fileID: 3080204350324254529}
   canvasHealth: {fileID: 4684562942322398871}
   canvasFuel: {fileID: 713971602156183385}
-  wheelMovementLeft: {fileID: 7832176667483110436}
-  wheelMovementRight: {fileID: 1288193949228553041}
 --- !u!114 &581961182349955378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1751,7 +1751,7 @@ Transform:
   m_GameObject: {fileID: 7567718110375292792}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0.285, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1838,7 +1838,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.65, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7938138518358695625}

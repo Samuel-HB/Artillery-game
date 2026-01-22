@@ -18,4 +18,6 @@ MonoBehaviour:
   airForce: 0
   hasHeavyCanon: 0
   hasLightCanon: 1
+  hasProjectionCanon: 1
   fuelCapacity: 20
+  fuelForRecovery: 6

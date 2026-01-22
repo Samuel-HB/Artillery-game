@@ -26,18 +26,18 @@ public class TankBehavior : MonoBehaviour
     {
         if (blackBoardTank.wheelMovementLeft.isWheelGrounded == true && blackBoardTank.wheelMovementRight.isWheelGrounded == true) {
             isGrounded = true;
-            speed = so_tank.movementSpeed;
+            //speed = so_tank.movementSpeed;
         }
         else if (blackBoardTank.wheelMovementLeft.isWheelGrounded == false && blackBoardTank.wheelMovementRight.isWheelGrounded == false) {
             isGrounded = false;
         }
         else if (blackBoardTank.wheelMovementLeft.isWheelGrounded == true || blackBoardTank.wheelMovementRight.isWheelGrounded == false) {
             isGrounded = true;
-            speed = so_tank.movementSpeed / 2;
+            //speed = so_tank.movementSpeed / 2;
         }
         else if (blackBoardTank.wheelMovementLeft.isWheelGrounded == false || blackBoardTank.wheelMovementRight.isWheelGrounded == true) {
             isGrounded = true;
-            speed = so_tank.movementSpeed / 2;
+            //speed = so_tank.movementSpeed / 2;
         }
 
         if (BattleManager.playerPlays == blackBoardTank.ref_Canon.tankID && fuel > 0 && isGrounded == true &&

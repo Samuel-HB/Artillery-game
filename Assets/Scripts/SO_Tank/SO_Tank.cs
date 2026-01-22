@@ -14,6 +14,7 @@ public class SO_Tank : ScriptableObject
     public bool hasProjectionCanon = true;
 
     public float fuelCapacity = 0f;
+    public float fuelForRecovery = 0f;
 }
 
 

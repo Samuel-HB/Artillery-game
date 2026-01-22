@@ -19,4 +19,5 @@ MonoBehaviour:
   hasHeavyCanon: 1
   hasLightCanon: 1
   hasProjectionCanon: 0
-  fuelCapacity: 15
+  fuelCapacity: 10
+  fuelForRecovery: 6.5

@@ -5,7 +5,7 @@ public class Recovery : MonoBehaviour
     private TankBehavior ref_TankBehavior;
     private BlackBoardTank ref_BlackBoardTank;
     private Rigidbody2D rbTank;
-    private int fuelNeeded = 2;
+    //private int fuelNeeded = 2;
 
     private bool isTimerStarted = false;
     private int timer = 0;
@@ -20,7 +20,8 @@ public class Recovery : MonoBehaviour
 
     private void Update()
     {
-        if (BattleManager.playerPlays == ref_BlackBoardTank.ref_Canon.tankID && ref_TankBehavior.fuel > fuelNeeded &&
+        if (BattleManager.playerPlays == ref_BlackBoardTank.ref_Canon.tankID &&
+            ref_TankBehavior.fuel > ref_TankBehavior.so_tank.fuelForRecovery &&
             (ref_TankBehavior.isGrounded == true || ref_BlackBoardTank.ref_TankBody.isGrounded == true) &&
             (BattleManager.state == State.WaitingForInput || BattleManager.state == State.WaitingForInputAfterAttack))
         {
@@ -31,7 +32,7 @@ public class Recovery : MonoBehaviour
                 isTimerStarted = true;
 
 
-                ref_TankBehavior.fuel -= fuelNeeded;
+                ref_TankBehavior.fuel -= ref_TankBehavior.so_tank.fuelForRecovery;
                 ref_TankBehavior.blackBoardTank.fuelBar.UpdateFuelBar(ref_TankBehavior.so_tank.fuelCapacity, ref_TankBehavior.fuel);
             }
         }

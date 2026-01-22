@@ -14,8 +14,10 @@ public class Canon : MonoBehaviour
 
     public GameObject point;
     GameObject[] points;
-    public int pointsNumber;
-    public float pointSpace;
+    //public int pointsNumber;
+
+    //public float pointSpace;
+    //private float pointSpace = 0.08f; // change space for each weapons
 
 
     private void Start()
@@ -23,17 +25,27 @@ public class Canon : MonoBehaviour
         weaponsGO = GameObject.Find("WeaponsContainers");
         weapons = weaponsGO.GetComponent<Weapons>();
 
-        ChangeCanon(weapons.lightCanon);
+        //ChangeCanon(weapons.lightCanon);
+        actualCanon = weapons.lightCanon;
 
-        points = new GameObject[pointsNumber];
-        for (int i = 0; i < pointsNumber; i++) {
+        points = new GameObject[actualCanon.pointsNumber];
+
+        for (int i = 0; i < actualCanon.pointsNumber; i++) {
             points[i] = Instantiate(point, startTrajectoryPoint.position, Quaternion.identity);
         }
     }
 
     public void ChangeCanon(SO_SimpleCanon canonChosen)
     {
+        foreach (GameObject point in points) {
+            Destroy(point);
+        }
+
         actualCanon = canonChosen;
+
+        for (int i = 0; i < actualCanon.pointsNumber; i++) {
+            points[i] = Instantiate(point, startTrajectoryPoint.position, Quaternion.identity);
+        }
     }
 
     void Update()
@@ -49,7 +61,7 @@ public class Canon : MonoBehaviour
 
         if (BattleManager.playerPlays == tankID && BattleManager.state == State.WaitingForInput)
         {
-            for (int i = 0; i < pointsNumber; i++) { //faire en sorte que ça ne s'execute qu'au bon moment            
+            for (int i = 0; i < actualCanon.pointsNumber; i++) { //faire en sorte que ça ne s'execute qu'au bon moment            
                 points[i].SetActive(true);
             }
 
@@ -65,13 +77,13 @@ public class Canon : MonoBehaviour
                 BattleManager.state = State.ShotInProgress;
             }
 
-            for (int i = 0; i < pointsNumber; i++) {
-                points[i].transform.position = PointPosition(i * pointSpace);
+            for (int i = 0; i < actualCanon.pointsNumber; i++) {
+                points[i].transform.position = PointPosition(i * actualCanon.pointSpace);
             }
         }
         else
         {
-            for (int i = 0; i < pointsNumber; i++) { //faire en sorte que ça ne s'execute qu'au bon moment 
+            for (int i = 0; i < actualCanon.pointsNumber; i++) { //faire en sorte que ça ne s'execute qu'au bon moment 
                 points[i].SetActive(false);
             }
         }

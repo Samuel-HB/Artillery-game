@@ -8,4 +8,6 @@ public class SO_SimpleCanon : ScriptableObject
     public GameObject bullet;
     public int damage = 30;
     public int launchVelocity = 10;
+    public int pointsNumber = 15;
+    public float pointSpace = 0.8f;
 }
