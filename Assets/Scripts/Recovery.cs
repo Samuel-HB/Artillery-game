@@ -5,7 +5,6 @@ public class Recovery : MonoBehaviour
     private TankBehavior ref_TankBehavior;
     private BlackBoardTank ref_BlackBoardTank;
     private Rigidbody2D rbTank;
-    //private int fuelNeeded = 2;
 
     private bool isTimerStarted = false;
     private int timer = 0;
@@ -25,12 +24,11 @@ public class Recovery : MonoBehaviour
             (ref_TankBehavior.isGrounded == true || ref_BlackBoardTank.ref_TankBody.isGrounded == true) &&
             (BattleManager.state == State.WaitingForInput || BattleManager.state == State.WaitingForInputAfterAttack))
         {
-            if (Input.GetKeyDown(KeyCode.S) && isTimerStarted == false)
+            if (Input.GetKeyDown(KeyCode.Z) && isTimerStarted == false)
             {
                 rbTank.AddForce(Vector3.up * 500);
                 rbTank.AddForce(new Vector3(0, 0, transform.rotation.z) * 20);
                 isTimerStarted = true;
-
 
                 ref_TankBehavior.fuel -= ref_TankBehavior.so_tank.fuelForRecovery;
                 ref_TankBehavior.blackBoardTank.fuelBar.UpdateFuelBar(ref_TankBehavior.so_tank.fuelCapacity, ref_TankBehavior.fuel);

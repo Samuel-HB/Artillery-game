@@ -13,26 +13,17 @@ public class Canon : MonoBehaviour
     private Vector2 direction;
 
     public GameObject point;
-    GameObject[] points;
-    //public int pointsNumber;
-
-    //public float pointSpace;
-    //private float pointSpace = 0.08f; // change space for each weapons
+    private GameObject[] points;
 
 
     private void Start()
     {
         weaponsGO = GameObject.Find("WeaponsContainers");
         weapons = weaponsGO.GetComponent<Weapons>();
-
-        //ChangeCanon(weapons.lightCanon);
         actualCanon = weapons.lightCanon;
 
         points = new GameObject[actualCanon.pointsNumber];
-
-        for (int i = 0; i < actualCanon.pointsNumber; i++) {
-            points[i] = Instantiate(point, startTrajectoryPoint.position, Quaternion.identity);
-        }
+        MakeCanonPoints();
     }
 
     public void ChangeCanon(SO_SimpleCanon canonChosen)
@@ -40,11 +31,26 @@ public class Canon : MonoBehaviour
         foreach (GameObject point in points) {
             Destroy(point);
         }
-
         actualCanon = canonChosen;
+        MakeCanonPoints();
+    }
 
+    private void MakeCanonPoints()
+    {
         for (int i = 0; i < actualCanon.pointsNumber; i++) {
             points[i] = Instantiate(point, startTrajectoryPoint.position, Quaternion.identity);
+        }
+
+        float transparency = 1f;
+        int j = actualCanon.pointsNumber - 1;
+
+        for (int i = actualCanon.pointsNumber - 1; i > actualCanon.pointsNumber - j; i--)
+        {
+            transparency -= 0.1f;
+            if (transparency <= 0f) {
+                transparency = 0f;
+            }
+            points[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f - transparency);
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] TankInstanciation ref_TankInstanciation;
+    [SerializeField] private TankInstanciation ref_TankInstanciation;
     [SerializeField] private Transform tank_game;
     public static List<Transform> tanks;
     private TankBehavior ref_Tank;
@@ -24,8 +24,8 @@ public class BattleManager : MonoBehaviour
 
     private int timeSpendSinceStart; // new line
 
-    [SerializeField] CameraContainer ref_CameraContainer;
-    [SerializeField] CameraManager ref_CameraManager;
+    [SerializeField] private CameraContainer ref_CameraContainer;
+    [SerializeField] private CameraManager ref_CameraManager;
     private bool isBulletFinded = false;
 
 
@@ -67,8 +67,6 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(state);
-
         if (state == State.ShotInProgress && isBulletFinded == false)
         {
             ref_CameraManager.FindBullet();
@@ -99,8 +97,7 @@ public class BattleManager : MonoBehaviour
             isTurnOver = false;
 
             // condition to not have no playerplays at all and all tanks destroy
-            if (isGameOver == false)
-            {
+            if (isGameOver == false) {
                 ChangeOfTurnFunction();
             }
         }

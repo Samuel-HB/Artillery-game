@@ -51,10 +51,10 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // because each tank has multiple collider the function execute for each of them,
+        // so changed variable of each tank when hit and check it, to only hit once
         if (collision.gameObject.GetComponentInParent<TankBehavior>() != null &&
             collision.gameObject.GetComponentInParent<TankBehavior>().hasBeenHit == false)
-            // because each tank has multiple collider the function execute for each of them,
-            // so changed variable of each tank when hit and check it, to only hit once
         {
             TankBehavior ref_TankBehavior = collision.GetComponentInParent<TankBehavior>();
 
@@ -66,8 +66,7 @@ public class Explosion : MonoBehaviour
             if (distance < minHitDistance) {
                 distance = minHitDistance;
             }
-            //if (distance > 6f)
-            //{
+            //if (distance > 6f) {
             //    distance = 6f;
             //}
 
@@ -85,8 +84,6 @@ public class Explosion : MonoBehaviour
             if (ref_TankBehavior.health <= 0) {
                 ref_TankBehavior.isDefeated = true;
             }
-
-
             Debug.Log("health: " + ref_TankBehavior.health + " - distance: " + distance);
             // parfois valeurs négatives dans la console, peut etre parce que le pushforce
             // est quand même calculé même quand il est en dessous de la distance minimale
@@ -94,20 +91,14 @@ public class Explosion : MonoBehaviour
             Destroy(gameObject);
             ref_TankBehavior.hasBeenHit = true;
             BattleManager.explosionJustOver = true;
-            // au lieu de mettre ça en true direct
-            // mettre un timer qui s'enclenche à ce moment là, le temps que la caméra se repositionne et s'arrête lentement
-            // avant de mettre en false
-
-            // de toute manière changer cette variable pour une qui ne s'enclenche que lorsque le tour est fini
-            // ce qui peut arriver après un tir, ou même avant
-
+            // au lieu de mettre ça en true direct mettre un timer qui s'enclenche à ce moment là,
+            // le temps que la caméra se repositionne et s'arrête lentement avant de mettre en false
             MapCollision();
         }
         else
         {
             Destroy(gameObject);
             BattleManager.explosionJustOver = true;
-
             MapCollision();
         }
     }

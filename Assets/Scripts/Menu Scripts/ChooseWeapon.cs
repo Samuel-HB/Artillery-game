@@ -4,16 +4,15 @@ using System.Collections.Generic;
 
 public class ChooseWeapon : MonoBehaviour
 {
-
     // ajouter la possibilité d'utiliser les touches 1, 2, 3... du clavier pour changer de canon
     // (sans avoir besoin de cliquer pour ouvrir l'arsenal)
-
 
     [SerializeField] private Button HeavyCanonButton;
     [SerializeField] private Button LightCanonButton;
     [SerializeField] private Button ProjectionCanonButton;
     private List<Button> buttons;
-    TankBehavior ref_TankBehavior;
+    private TankBehavior ref_TankBehavior;
+    private bool isWeaponsOpen = false;
 
     private void Start()
     {
@@ -30,57 +29,49 @@ public class ChooseWeapon : MonoBehaviour
     private void Update() // faire en sorte que le disable ne soit checké que lors d'un changement de state
     {
         ref_TankBehavior = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<TankBehavior>();
-        transform.position = new Vector3(ref_TankBehavior.transform.position.x,
-                                         ref_TankBehavior.transform.position.y);
+        transform.position = new Vector3(ref_TankBehavior.transform.position.x, ref_TankBehavior.transform.position.y);
 
-        if (Input.GetKeyDown(KeyCode.G) && BattleManager.state == State.WaitingForInput)
+        if (Input.GetKeyDown(KeyCode.F) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == false)
         {
+            isWeaponsOpen = true;
+
             for (int i = 0; i < buttons.Count; i++) {
                 EnableButton(buttons[i]);
             }
-
-            if (ref_TankBehavior.so_tank.hasHeavyCanon == true)
-            {
-                HeavyCanonButton.interactable = true;
-                HeavyCanonButton.image.color = Color.white;
-            } 
-            else {
-                HeavyCanonButton.interactable = false;
-                HeavyCanonButton.image.color = Color.gray;
-            }
-            // - - -
-            if (ref_TankBehavior.so_tank.hasLightCanon == true)
-            {
-                LightCanonButton.interactable = true;
-                LightCanonButton.image.color = Color.white;
-            } else
-            {
-                LightCanonButton.interactable = false;
-                LightCanonButton.image.color = Color.gray;
-            }
-            // - - -
-            if (ref_TankBehavior.so_tank.hasProjectionCanon == true)
-            {
-                ProjectionCanonButton.interactable = true;
-                ProjectionCanonButton.image.color = Color.white;
-            }
-            else
-            {
-                ProjectionCanonButton.interactable = false;
-                ProjectionCanonButton.image.color = Color.gray;
-            }
+            ButtonInterractabe(ref_TankBehavior.so_tank.hasHeavyCanon, HeavyCanonButton);
+            ButtonInterractabe(ref_TankBehavior.so_tank.hasLightCanon, LightCanonButton);
+            ButtonInterractabe(ref_TankBehavior.so_tank.hasProjectionCanon, ProjectionCanonButton);
         }
-        else if (Input.GetKeyDown(KeyCode.H) && BattleManager.state == State.WaitingForInput)
+        else if (Input.GetKeyDown(KeyCode.F) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == true)
         {
-            for (int i = 0; i < buttons.Count; i++) {
-                DisableButton(buttons[i]);
-            }
+            WeaponsClosed();
         }
         else if (BattleManager.state != State.WaitingForInput)
         {
+            WeaponsClosed();
+        }
+    }
+
+    private void WeaponsClosed()
+    {
+        isWeaponsOpen = false;
+
             for (int i = 0; i < buttons.Count; i++) {
                 DisableButton(buttons[i]);
             }
+    }
+
+    private void ButtonInterractabe(bool hasIt, Button button)
+    {
+        if (hasIt == true)
+        {
+            button.interactable = true;
+            button.image.color = Color.white;
+        }
+        else
+        {
+            button.interactable = false;
+            button.image.color = Color.gray;
         }
     }
 

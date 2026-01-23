@@ -15,5 +15,6 @@ MonoBehaviour:
   weaponName: gus
   bullet: {fileID: 4044791374164343465, guid: c94e5348c2a9b4d4ebc813e5e7db8eaf, type: 3}
   damage: 30
-  launchVelocity: 10
+  launchVelocity: 19
   pointsNumber: 25
+  pointSpace: 0.04

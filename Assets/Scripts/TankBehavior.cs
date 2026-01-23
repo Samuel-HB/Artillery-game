@@ -43,13 +43,13 @@ public class TankBehavior : MonoBehaviour
         if (BattleManager.playerPlays == blackBoardTank.ref_Canon.tankID && fuel > 0 && isGrounded == true &&
             (BattleManager.state == State.WaitingForInput || BattleManager.state == State.WaitingForInputAfterAttack))
         {
-            if (Input.GetKey(KeyCode.RightArrow)) {
+            if (Input.GetKey(KeyCode.D)) {
                 transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
                 //fuel -= 0.005f - Time.deltaTime; // ajout de time
                 fuel -= 0.005f;
                 blackBoardTank.fuelBar.UpdateFuelBar(so_tank.fuelCapacity, fuel);
             }
-            else if (Input.GetKey(KeyCode.LeftArrow)) {
+            else if (Input.GetKey(KeyCode.Q)) {
                 transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
                 //fuel -= 0.005f - Time.deltaTime; // ajout de time
                 fuel -= 0.005f;
