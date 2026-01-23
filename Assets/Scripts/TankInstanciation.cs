@@ -6,7 +6,8 @@ public class TankInstanciation : MonoBehaviour
     private float initialHigh = 0.1f;
 
 
-    //private void TankInstantiate(int x1, int y1, int x2, int y2, int xx1, int yy1, int xx2, int yy2, int xx3, int yy3,
+    //private void TankInstantiate(int x1, int y1, int x2, int y2,
+    //                             int xx1, int yy1, int xx2, int yy2, int xx3, int yy3,
     //                             int xxx1, int yyy1, int xxx2, int yyy2, int xxx3, int yyy3, int xxx4, int yyy4)
     public void TankInstantiate()
     {

@@ -57,7 +57,7 @@ public class Canon : MonoBehaviour
     void Update()
     {
         Vector2 canonPosition = transform.position;
-        if (tankID == BattleManager.playerPlays)
+        if (tankID == BattleManager.playerPlays && PauseMenu.isGamePaused == false)
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             direction = mousePosition - canonPosition;

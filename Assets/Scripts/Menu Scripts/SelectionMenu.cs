@@ -14,6 +14,16 @@ public class SelectionMenu: MonoBehaviour
     
     public void Start()
     {
+        // newgame
+        playerValidation = 0;
+
+        if (tanks_game != null) {
+            //foreach (Transform tank_game in tanks_game) {
+            //    tanks_game.Remove(tank_game);
+            //}
+            tanks_game.Clear();
+        }
+
         tanks_game = new List<Transform>();
     }
 

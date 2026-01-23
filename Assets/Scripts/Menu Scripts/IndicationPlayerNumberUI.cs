@@ -11,7 +11,6 @@ public class IndicationPlayerNumberUI : MonoBehaviour
 
         if (intPlayerOwnNumber <= BattleManager.numberOfPlayer) {
             playerOwnNumber.text = "Player " + intPlayerOwnNumber;
-            //playerOwnNumber.text = "Player " + BattleManager.numberOfPlayer + 1;
         }
     }
 }

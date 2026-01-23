@@ -3,6 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu: MonoBehaviour
 {
+    //newgame
+    private void Start()
+    {
+        BattleManager.numberOfPlayer = 2;
+    }
+
     public void LoadSelectionMenu()
     {
         SceneManager.LoadScene("Selection Menu");

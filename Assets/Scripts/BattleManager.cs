@@ -36,8 +36,17 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
+        // newgame
+
+        if (tanks != null) {
+            foreach (Transform tank in tanks) {
+                Destroy(tank);
+            }
+        }
+
         layerWithoutBulletCollision = LayerMask.NameToLayer("ActualPlayer");
         tanks = new List<Transform>();
+
 
         ref_TankInstanciation.TankInstantiate();
 
@@ -53,12 +62,15 @@ public class BattleManager : MonoBehaviour
         state = State.WaitingForInput;
 
         foreach (Transform tank in tanks) {
-            tank.GetComponentInChildren<HealthBar>().GetComponentInParent<Canvas>().enabled = true;
+            //tank.GetComponentInChildren<HealthBar>().GetComponentInParent<Canvas>().enabled = true;
+            tank.GetComponent<BlackBoardTank>().canvasHealth.enabled = true;
         }
         foreach (Transform tank in tanks) {
-            tank.GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false;
+            //tank.GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false;
+            tank.GetComponent<BlackBoardTank>().canvasFuel.enabled = true;
         }
-        tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = true;
+        //tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = true;
+        tanks[playerPlays].GetComponent<BlackBoardTank>().canvasFuel.enabled = true;
 
         BulletCannotInterractWithShooter();
 
@@ -78,7 +90,11 @@ public class BattleManager : MonoBehaviour
             explosionJustOver = false;
             isBulletFinded = false;
             ref_CameraManager.ChangeCamera(); // ajouter un temps de latence avant de remettre la caméra sur le joueur
-            AfterAttack();
+            //AfterAttack();
+
+            for (int i = 0; i < numberOfPlayer; i++) {             
+            tanks[i].GetComponent<TankBehavior>().hasBeenHit = false;
+            }
             CheckForVictory();
             state = State.WaitingForInputAfterAttack;
             explosionDone = true;
@@ -124,12 +140,12 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void AfterAttack()
-    {
-        for (int i = 0; i < numberOfPlayer; i++) {             
-            tanks[i].GetComponent<TankBehavior>().hasBeenHit = false;
-        }
-    }
+    //private void AfterAttack()
+    //{
+    //    for (int i = 0; i < numberOfPlayer; i++) {             
+    //        tanks[i].GetComponent<TankBehavior>().hasBeenHit = false;
+    //    }
+    //}
 
     public void ChangeOfTurnFunction()
     {
@@ -158,9 +174,11 @@ public class BattleManager : MonoBehaviour
         }
 
         foreach (Transform tank in tanks) {
-            tank.GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false;
+            //tank.GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = false;
+            tank.GetComponent<BlackBoardTank>().canvasFuel.enabled = false;
         }
-        tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = true;
+        //tanks[playerPlays].GetComponentInChildren<FuelBar>().GetComponentInParent<Canvas>().enabled = true;
+        tanks[playerPlays].GetComponent<BlackBoardTank>().canvasFuel.enabled = true;
 
         BulletCannotInterractWithShooter();
 
