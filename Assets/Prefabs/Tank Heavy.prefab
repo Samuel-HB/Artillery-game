@@ -208,14 +208,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833799252269655159}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4, y: -0.15, z: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: -1.4, y: -0.5, z: -1}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1208354104088462940}
   m_Father: {fileID: 4222940363389086445}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!212 &6680861869131410628
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.75, y: 0.75}
+  m_Size: {x: 2.3, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &7344456621094833866
 MonoBehaviour:
@@ -1286,8 +1286,6 @@ MonoBehaviour:
   firePoint: {fileID: 7296794454339000616}
   startTrajectoryPoint: {fileID: 8083628543326565792}
   point: {fileID: 6744962056003772560, guid: a8c96fd850ac97a4fa3d544cfea20769, type: 3}
-  pointsNumber: 40
-  pointSpace: 0.03
 --- !u!1 &5992876362431090720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1494,7 @@ Transform:
   m_GameObject: {fileID: 6780932409490507269}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: -0.15, z: -1}
+  m_LocalPosition: {x: 1.4, y: -0.5, z: -1}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a469796f6c714a4eaedcb63383b09d4, type: 3}
   m_Name: Heavy_Tank
   m_EditorClassIdentifier: Assembly-CSharp::SO_Tank
-  tankName: gus
-  health: 120
-  movementSpeed: 3.25
-  airForce: 0
+  health: 140
+  movementSpeed: 4.5
   hasHeavyCanon: 1
   hasLightCanon: 1
   hasProjectionCanon: 0

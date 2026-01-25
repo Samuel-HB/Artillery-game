@@ -20,11 +20,6 @@ public class TileMapInterraction : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    RemoveTile();
-        //}
-
         if (isStartedTileExplosion == true)
         {
             RemoveTile(tilesPositions);
@@ -34,14 +29,10 @@ public class TileMapInterraction : MonoBehaviour
 
     public static void RemoveTile(List<Vector3Int> tilesPositions)
     {
-        //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector3Int position = grid.WorldToCell(mousePos);
-
         for (int i = 0;  i < tilesPositions.Count; i++)
         {
             Vector3Int position = grid.WorldToCell(tilesPositions[i]);
             tilemap.SetTile(position, null);
-            Debug.Log("RemoveTile");
         }
         tilesPositions.Clear();
     }

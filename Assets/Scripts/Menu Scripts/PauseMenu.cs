@@ -10,8 +10,8 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        containerPause.SetActive(false);
         pauseButton.gameObject.SetActive(true);
+        containerPause.SetActive(false);
     }
 
     private void Update()
@@ -44,6 +44,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 1;
+        isGamePaused = false;
         SceneManager.LoadScene("Main Menu");
     }
 }

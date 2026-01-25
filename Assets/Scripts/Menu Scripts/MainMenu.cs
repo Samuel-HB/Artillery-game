@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu: MonoBehaviour
 {
-    //newgame
     private void Start()
     {
         BattleManager.numberOfPlayer = 2;

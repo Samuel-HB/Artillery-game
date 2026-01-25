@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a469796f6c714a4eaedcb63383b09d4, type: 3}
   m_Name: Speedy_Tank
   m_EditorClassIdentifier: Assembly-CSharp::SO_Tank
-  tankName: gus
-  health: 60
+  health: 65
   movementSpeed: 7.5
-  airForce: 0
   hasHeavyCanon: 0
   hasLightCanon: 1
   hasProjectionCanon: 1

@@ -67,18 +67,18 @@ public class Canon : MonoBehaviour
 
         if (BattleManager.playerPlays == tankID && BattleManager.state == State.WaitingForInput)
         {
-            for (int i = 0; i < actualCanon.pointsNumber; i++) { //faire en sorte que ça ne s'execute qu'au bon moment            
+            for (int i = 0; i < actualCanon.pointsNumber; i++) {          
                 points[i].SetActive(true);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && PauseMenu.isGamePaused == false)
             {
                 GameObject bullet = actualCanon.bullet;
                 bullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
+                //bullet = Instantiate(bullet, new Vector3(firePoint.position.x + 0.2f, firePoint.position.y + 0.5f), firePoint.rotation);
                 bullet.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * actualCanon.launchVelocity;
                 Bullet ref_Bullet = bullet.GetComponent<Bullet>();
                 ref_Bullet.damage = actualCanon.damage;
-                // est-ce que ça va bien prendre de nouvelles bullets à chaque fois ?
 
                 BattleManager.state = State.ShotInProgress;
             }
@@ -89,7 +89,7 @@ public class Canon : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < actualCanon.pointsNumber; i++) { //faire en sorte que ça ne s'execute qu'au bon moment 
+            for (int i = 0; i < actualCanon.pointsNumber; i++) { 
                 points[i].SetActive(false);
             }
         }

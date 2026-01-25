@@ -7,21 +7,21 @@ public class TankBehavior : MonoBehaviour
     public int health;
     public float speed;
     public float fuel = 0f;
-    public bool isGrounded = false; // private before
+    public bool isGrounded = false;
     public bool hasBeenHit = false;
+    public bool hasFall = false;
     public bool isDefeated = false;
     private Vector3 canvasRelativePos;
 
-    private void Start()
+    private void Awake()
     {
         blackBoardTank = GetComponentInParent<BlackBoardTank>();
-
         fuel = so_tank.fuelCapacity;
         speed = so_tank.movementSpeed;
         health = so_tank.health;
         canvasRelativePos = blackBoardTank.canvasHealth.transform.position;
     }
-    
+
     private void Update()
     {
         if (blackBoardTank.wheelMovementLeft.isWheelGrounded == true && blackBoardTank.wheelMovementRight.isWheelGrounded == true) {
@@ -39,20 +39,23 @@ public class TankBehavior : MonoBehaviour
             isGrounded = true;
             //speed = so_tank.movementSpeed / 2;
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (BattleManager.playerPlays == blackBoardTank.ref_Canon.tankID && fuel > 0 && isGrounded == true &&
             (BattleManager.state == State.WaitingForInput || BattleManager.state == State.WaitingForInputAfterAttack))
         {
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKey(KeyCode.D))
+            {
                 transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
-                //fuel -= 0.005f - Time.deltaTime; // ajout de time
-                fuel -= 0.005f;
+                fuel -= 0.04f;
                 blackBoardTank.fuelBar.UpdateFuelBar(so_tank.fuelCapacity, fuel);
             }
-            else if (Input.GetKey(KeyCode.Q)) {
+            else if (Input.GetKey(KeyCode.Q))
+            {
                 transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
-                //fuel -= 0.005f - Time.deltaTime; // ajout de time
-                fuel -= 0.005f;
+                fuel -= 0.04f;
                 blackBoardTank.fuelBar.UpdateFuelBar(so_tank.fuelCapacity, fuel);
             }
         }

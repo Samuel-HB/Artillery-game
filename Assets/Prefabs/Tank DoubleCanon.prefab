@@ -1377,8 +1377,6 @@ MonoBehaviour:
   firePoint: {fileID: 7296794454339000616}
   startTrajectoryPoint: {fileID: 8083628543326565792}
   point: {fileID: 6744962056003772560, guid: a8c96fd850ac97a4fa3d544cfea20769, type: 3}
-  pointsNumber: 40
-  pointSpace: 0.03
 --- !u!1 &6162295531321854309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,14 +1554,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6780932409490507269}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1, y: -0.21, z: -1}
   m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6268554652699906380}
   m_Father: {fileID: 4222940363389086445}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &979110530808442318
 SpriteRenderer:
   m_ObjectHideFlags: 0

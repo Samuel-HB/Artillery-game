@@ -14,8 +14,8 @@ TagManager:
   - UI
   - ActualPlayer
   - Bullet
-  - 
-  - 
+  - DestructibleTilemap
+  - UndestructibleTilemap
   - 
   - 
   - 

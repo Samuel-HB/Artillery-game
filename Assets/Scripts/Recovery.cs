@@ -17,6 +17,7 @@ public class Recovery : MonoBehaviour
         rbTank = GetComponent<Rigidbody2D>();
     }
 
+    //add a little timer to jump only a few times after landing, to avoid having gravity forces against jump force
     private void Update()
     {
         if (BattleManager.playerPlays == ref_BlackBoardTank.ref_Canon.tankID &&

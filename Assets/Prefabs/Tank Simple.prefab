@@ -1255,7 +1255,7 @@ Transform:
   m_GameObject: {fileID: 3354386879006935253}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1321,6 +1321,7 @@ MonoBehaviour:
   fuel: 0
   isGrounded: 0
   hasBeenHit: 0
+  hasFall: 0
   isDefeated: 0
 --- !u!114 &5184602488384691139
 MonoBehaviour:
@@ -1776,8 +1777,6 @@ MonoBehaviour:
   firePoint: {fileID: 2034176205211481657}
   startTrajectoryPoint: {fileID: 4149864552778412455}
   point: {fileID: 6744962056003772560, guid: a8c96fd850ac97a4fa3d544cfea20769, type: 3}
-  pointsNumber: 40
-  pointSpace: 0.03
 --- !u!1 &7857861648879759581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,7 +1802,7 @@ Transform:
   m_GameObject: {fileID: 7857861648879759581}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1945,7 +1944,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.75, y: 0.75}
+  m_Size: {x: 2.4, y: 0.9}
   m_EdgeRadius: 0
 --- !u!114 &8275589203055252174
 MonoBehaviour:

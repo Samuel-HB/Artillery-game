@@ -8,4 +8,5 @@ public class CameraContainer : MonoBehaviour
     public CinemachineCamera cam3;
     public CinemachineCamera cam4;
     public CinemachineCamera camShoot;
+    public CinemachineCamera camGlobal;
 }
