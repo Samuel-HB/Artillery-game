@@ -5,6 +5,8 @@ public class FallCollision : MonoBehaviour
     [SerializeField] private SpawnPoints ref_SpawnPoints;
     private int fallingDamage = 35;
     private Transform respawnPosition;
+    [SerializeField] private CameraManager ref_CameraManager;
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -16,9 +18,13 @@ public class FallCollision : MonoBehaviour
             ref_TankBehavior.health -= fallingDamage;
             ref_TankBehavior.blackBoardTank.healthBar.UpdateHealthBar(ref_TankBehavior.so_tank.health, ref_TankBehavior.health);
 
-            if (ref_TankBehavior.health <= 0) {
+            if (ref_TankBehavior.health <= 0)
+            {
                 ref_TankBehavior.isDefeated = true;
+                ref_CameraManager.tanksBehavior.Add(ref_TankBehavior);
+                ref_CameraManager.isTimerStarted = true;
                 BattleManager.playerDefeat = true;
+                ref_CameraManager.ChangeCamera();
             }
             ref_TankBehavior.hasFall = true; // to avoid repeteting this collision function more than one time a frame
 
@@ -28,8 +34,8 @@ public class FallCollision : MonoBehaviour
             } else {
                 respawnPosition = ref_SpawnPoints.spawmPoint2P_2;
             }
-            ref_TankBehavior.transform.position = new Vector3
-                             (respawnPosition.transform.position.x, respawnPosition.transform.position.y);
+            ref_TankBehavior.transform.position = new Vector3(respawnPosition.transform.position.x,
+                                                              respawnPosition.transform.position.y);
         }
     }
 }

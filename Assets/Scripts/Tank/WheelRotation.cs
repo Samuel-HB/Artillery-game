@@ -17,10 +17,10 @@ public class WheelRotation : MonoBehaviour
         if (ref_WheelMovement.isWheelGrounded == true)
         {
             if (transform.position.x > lastPosition.x + 0.001f) {
-                transform.Rotate(0, 0, -ref_TankBehavior.speed * 65 * Time.deltaTime);
+                transform.Rotate(0, 0, -ref_TankBehavior.speed * 150 * Time.deltaTime);
             }
             if (transform.position.x < lastPosition.x - 0.001f) {
-                transform.Rotate(0, 0, ref_TankBehavior.speed * 65 * Time.deltaTime);
+                transform.Rotate(0, 0, ref_TankBehavior.speed * 150 * Time.deltaTime);
             }
         }
     }

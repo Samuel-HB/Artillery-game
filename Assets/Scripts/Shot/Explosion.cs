@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Explosion : MonoBehaviour
 {
@@ -11,11 +9,7 @@ public class Explosion : MonoBehaviour
     private int minExplosionDamage = 1;
     [SerializeField] private int maxPushForce = 400;
     private int minPushForce = 1;
-
     private CameraManager ref_CameraManager;
-    //private int i = 0;
-    //private bool isTimerStarted = false;
-    //private List<TankBehavior> tanksBehavior;
 
     private void Start()
     {
@@ -26,34 +20,27 @@ public class Explosion : MonoBehaviour
         coll = GetComponent<CircleCollider2D>();
         maxHitDistance = coll.radius;
         minExplosionDamage = maxExplosionDamage / 3;
-
-        //tanksBehavior = new List<TankBehavior>();
     }
 
     private void MapCollision() //destroy map in a circlar zone
     {
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 1 + i,
                                                                     (int)(transform.position.y) - 2));
         }
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 2 + i,
                                                                     (int)(transform.position.y) - 1));
         }
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 2 + i,
                                                                     (int)(transform.position.y)));
         }
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 2 + i,
                                                                     (int)(transform.position.y) + 1));
         }
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             TileMapInterraction.tilesPositions.Add(new Vector3Int((int)(transform.position.x) - 1 + i,
                                                                     (int)(transform.position.y) + 2));
         }
@@ -87,12 +74,10 @@ public class Explosion : MonoBehaviour
             ref_TankBehavior.blackBoardTank.healthBar.UpdateHealthBar(ref_TankBehavior.so_tank.health, ref_TankBehavior.health);
             rbTank.AddForce(-pushDirection * pushForceResult);
 
-
             if (ref_TankBehavior.health <= 0)
             {
                 ref_TankBehavior.isDefeated = true;
-                ref_CameraManager.ChangeCamera();
-
+                //ref_CameraManager.ChangeCamera();
                 ref_CameraManager.tanksBehavior.Add(ref_TankBehavior);
                 ref_CameraManager.isTimerStarted = true;
                 ref_CameraManager.ChangeCamera();

@@ -39,12 +39,8 @@ public class BattleManager : MonoBehaviour
         }
         tanks = new List<Transform>();
         ref_TankInstanciation.TankInstantiate();
-
-        layerWithoutBulletCollision = LayerMask.NameToLayer("ActualPlayer");
-
         playerPlays = Random.Range(0, numberOfPlayer);
-
-        state = State.WaitingForInput;
+        layerWithoutBulletCollision = LayerMask.NameToLayer("ActualPlayer");
 
         foreach (Transform tank in tanks) {
             tank.GetComponent<BlackBoardTank>().canvasHealth.enabled = true;
@@ -55,14 +51,14 @@ public class BattleManager : MonoBehaviour
         tanks[playerPlays].GetComponent<BlackBoardTank>().canvasFuel.enabled = true;
 
         BulletCannotInterractWithShooter();
-
         ref_CameraManager.ChangeCamera();
+
+        state = State.WaitingForInput;
     }
 
     private void Update()
     {
-        if (state == State.ShotInProgress && isBulletFinded == false)
-        {
+        if (state == State.ShotInProgress && isBulletFinded == false) {
             ref_CameraManager.FindBullet();
             isBulletFinded = true;
         }
@@ -81,34 +77,34 @@ public class BattleManager : MonoBehaviour
             explosionDone = true;
         }
 
-        for (int i = 0; i < numberOfPlayer; i++) {
+        for (int i = 0; i < numberOfPlayer; i++)
+        {
             if (tanks[i].GetComponent<TankBehavior>().hasFall == true) {
                 CheckForVictory();
             }
             tanks[i].GetComponent<TankBehavior>().hasFall = false;
         }
 
-
-        if (explosionDone == true && state == State.WaitingForInputAfterAttack && tanks[playerPlays].GetComponent<TankBehavior>().fuel <= 0) {
+        if (explosionDone == true && state == State.WaitingForInputAfterAttack &&
+            tanks[playerPlays].GetComponent<TankBehavior>().fuel <= 0)
+        {
             isTurnOver = true;
         }
-        else if (tanks[playerPlays].GetComponent<TankBehavior>().health <= 0) {
+        else if (tanks[playerPlays].GetComponent<TankBehavior>().health <= 0)
+        {
             isTurnOver = true;
         }
-
 
         if (ref_Timer.timerOver == true && state != State.ShotInProgress) {
             isTurnOver = true;
         }
 
-
         if (isTurnOver == true)
         {
             explosionDone = false;
             isTurnOver = false;
-
-            // condition to not have no playerplays at all and all tanks destroy
-            if (isGameOver == false) {
+            
+            if (isGameOver == false) { // condition to not have no playerplays at all and all tanks destroy
                 ChangeOfTurnFunction();
             }
         }
@@ -118,12 +114,10 @@ public class BattleManager : MonoBehaviour
     {
         numberOfTankDefeated = 0;
 
-        for (int i = 0; i < numberOfPlayer; i++)
-        {
+        for (int i = 0; i < numberOfPlayer; i++) {
             ref_Tank = tanks[i].GetComponent<TankBehavior>();
 
-            if (ref_Tank.health <= 0)
-            {
+            if (ref_Tank.health <= 0) {
                 numberOfTankDefeated++;
             }
         }
@@ -144,10 +138,10 @@ public class BattleManager : MonoBehaviour
 
     public void ChangeOfTurnFunction()
     {
+        state = State.ChangeOfTurn;
+
         ref_Timer.StopTimer();
         ref_Timer.CallStartTimer();
-
-        state = State.ChangeOfTurn;
 
         if (playerPlays >= numberOfPlayer - 1) {
             playerPlays = 0;
@@ -155,7 +149,6 @@ public class BattleManager : MonoBehaviour
         else {
             playerPlays++;
         }
-        state = State.WaitingForInput;
 
         foreach (Transform tank in tanks)
         {
@@ -163,7 +156,6 @@ public class BattleManager : MonoBehaviour
             ref_Tank.fuel = ref_Tank.so_tank.fuelCapacity;
             ref_Tank.blackBoardTank.fuelBar.UpdateFuelBar(ref_Tank.so_tank.fuelCapacity, ref_Tank.fuel);
         }
-            Debug.Log("update fuel bar");
 
         foreach (Transform tank in tanks) {
             tank.GetComponent<BlackBoardTank>().canvasFuel.enabled = false;
@@ -177,6 +169,8 @@ public class BattleManager : MonoBehaviour
         }
 
         ref_CameraManager.ChangeCamera();
+
+        state = State.WaitingForInput;
     }
 
     private void BulletCannotInterractWithShooter()

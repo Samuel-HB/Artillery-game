@@ -2824,6 +2824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallCollision
   ref_SpawnPoints: {fileID: 521557252}
+  ref_CameraManager: {fileID: 519420034}
 --- !u!1 &236667656
 GameObject:
   m_ObjectHideFlags: 0
@@ -22175,6 +22176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallCollision
   ref_SpawnPoints: {fileID: 521557252}
+  ref_CameraManager: {fileID: 519420034}
 --- !u!1 &929950342
 GameObject:
   m_ObjectHideFlags: 0
@@ -22593,6 +22595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallCollision
   ref_SpawnPoints: {fileID: 521557252}
+  ref_CameraManager: {fileID: 519420034}
 --- !u!1 &1153855312
 GameObject:
   m_ObjectHideFlags: 0
@@ -23214,6 +23217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallCollision
   ref_SpawnPoints: {fileID: 521557252}
+  ref_CameraManager: {fileID: 519420034}
 --- !u!1 &1280101162
 GameObject:
   m_ObjectHideFlags: 0

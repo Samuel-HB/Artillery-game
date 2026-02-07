@@ -75,7 +75,6 @@ public class Canon : MonoBehaviour
             {
                 GameObject bullet = actualCanon.bullet;
                 bullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
-                //bullet = Instantiate(bullet, new Vector3(firePoint.position.x + 0.2f, firePoint.position.y + 0.5f), firePoint.rotation);
                 bullet.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * actualCanon.launchVelocity;
                 Bullet ref_Bullet = bullet.GetComponent<Bullet>();
                 ref_Bullet.damage = actualCanon.damage;

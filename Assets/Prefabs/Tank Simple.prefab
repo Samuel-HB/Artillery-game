@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9204967195622386890}
-  - component: {fileID: 5563323934019002801}
   - component: {fileID: 5962100599685400001}
   - component: {fileID: 6131695917528186475}
   - component: {fileID: 5693365566201656271}
@@ -36,18 +35,6 @@ Transform:
   - {fileID: 2106646806952757638}
   m_Father: {fileID: 7938138518358695625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
---- !u!114 &5563323934019002801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506008518128675247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca32978ca1f6be64caf39a143b716f57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WheelRotation
 --- !u!212 &5962100599685400001
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -717,7 +704,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6499682841728470745}
-  - component: {fileID: 233549601008695289}
   - component: {fileID: 5299006360999484525}
   - component: {fileID: 2262509178060083242}
   - component: {fileID: 1376001073487730461}
@@ -744,18 +730,6 @@ Transform:
   - {fileID: 818700140340431649}
   m_Father: {fileID: 7938138518358695625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &233549601008695289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2454399055029702175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca32978ca1f6be64caf39a143b716f57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WheelRotation
 --- !u!212 &5299006360999484525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1316,6 +1290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankMovement
   so_tank: {fileID: 11400000, guid: dd7439b95fe6a6b4da6b9865c2804740, type: 2}
   blackBoardTank: {fileID: 0}
+  rb: {fileID: 0}
   health: 0
   speed: 0
   fuel: 0
@@ -1340,8 +1315,6 @@ MonoBehaviour:
   ref_TankBody: {fileID: 8275589203055252174}
   wheelLeft: {fileID: 2454399055029702175}
   wheelRight: {fileID: 506008518128675247}
-  triggerLeft: {fileID: 4199458660014726247}
-  triggerRight: {fileID: 1878257756687393472}
   wheelMovementLeft: {fileID: 7832176667483110436}
   wheelMovementRight: {fileID: 1288193949228553041}
   healthBar: {fileID: 6554335609026134352}
@@ -1934,7 +1907,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.07996136}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1944,7 +1917,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.4, y: 0.9}
+  m_Size: {x: 2.4, y: 0.74007726}
   m_EdgeRadius: 0
 --- !u!114 &8275589203055252174
 MonoBehaviour:

@@ -5,8 +5,8 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public TMP_Text timerText;
-    private IEnumerator timer;
     public bool timerOver = false;
+    private IEnumerator timer;
 
     private void Start()
     {

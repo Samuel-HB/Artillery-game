@@ -6,13 +6,12 @@ public class CameraManager : MonoBehaviour
 {
     static List<CinemachineCamera> cameras = new List<CinemachineCamera>();
     public static CinemachineCamera activeCamera = null;
-    [SerializeField] CameraContainer ref_CameraContainer;
+    [SerializeField] private CameraContainer ref_CameraContainer;
 
     public static bool isCameraTimerOver = true;
     private int timer = 0;
-
-    private int i = 0;
     public bool isTimerStarted = false;
+    private int i = 0;
     public List<TankBehavior> tanksBehavior;
 
     public static bool IsCameraActive(CinemachineCamera cam)
@@ -66,28 +65,24 @@ public class CameraManager : MonoBehaviour
         if (isCameraTimerOver == false) {
             SwitchCamera(ref_CameraContainer.camGlobal);
         }
+        //else if (BattleManager.tanks[BattleManager.playerPlays].GetComponent<TankBehavior>().isDefeated == true) {
+        //    SwitchCamera(ref_CameraContainer.camGlobal);
+        //}
         else
         {
-            if (BattleManager.tanks[BattleManager.playerPlays].GetComponent<TankBehavior>().isDefeated == true) {
-                SwitchCamera(ref_CameraContainer.camGlobal);
+            if (BattleManager.playerPlays == 0) {
+                SwitchCamera(ref_CameraContainer.cam1);
             }
-            else
-            {
-                if (BattleManager.playerPlays == 0)
-                {
-                    SwitchCamera(ref_CameraContainer.cam1);
-                }
-                if (BattleManager.playerPlays == 1) {
-                    SwitchCamera(ref_CameraContainer.cam2);
-                }
-                if (BattleManager.playerPlays == 2) {
-                    SwitchCamera(ref_CameraContainer.cam3);
-                }
-                if (BattleManager.playerPlays == 3) {
-                    SwitchCamera(ref_CameraContainer.cam4);
-                }
+            if (BattleManager.playerPlays == 1) {
+                SwitchCamera(ref_CameraContainer.cam2);
             }
-        }
+            if (BattleManager.playerPlays == 2) {
+                SwitchCamera(ref_CameraContainer.cam3);
+            }
+            if (BattleManager.playerPlays == 3) {
+                SwitchCamera(ref_CameraContainer.cam4);
+            }
+        }        
     }
 
     private void Start()
@@ -113,8 +108,7 @@ public class CameraManager : MonoBehaviour
             i++;
             if (i > 120)
             {
-                foreach (TankBehavior refTank in tanksBehavior)
-                {
+                foreach (TankBehavior refTank in tanksBehavior) {
                     refTank.transform.position = new Vector3(1000, 0);
                 }
                 tanksBehavior.Clear();

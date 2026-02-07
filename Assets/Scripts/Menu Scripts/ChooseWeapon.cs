@@ -31,7 +31,7 @@ public class ChooseWeapon : MonoBehaviour
         ref_TankBehavior = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<TankBehavior>();
         transform.position = new Vector3(ref_TankBehavior.transform.position.x, ref_TankBehavior.transform.position.y);
 
-        if (Input.GetKeyDown(KeyCode.F) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == false)
+        if (Input.GetMouseButtonDown(0) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == false)
         {
             isWeaponsOpen = true;
 
@@ -42,12 +42,10 @@ public class ChooseWeapon : MonoBehaviour
             ButtonInterractabe(ref_TankBehavior.so_tank.hasLightCanon, LightCanonButton);
             ButtonInterractabe(ref_TankBehavior.so_tank.hasProjectionCanon, ProjectionCanonButton);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == true)
-        {
+        else if (Input.GetMouseButtonDown(0) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == true) {
             WeaponsClosed();
         }
-        else if (BattleManager.state != State.WaitingForInput)
-        {
+        else if (BattleManager.state != State.WaitingForInput) {
             WeaponsClosed();
         }
     }
@@ -55,10 +53,9 @@ public class ChooseWeapon : MonoBehaviour
     private void WeaponsClosed()
     {
         isWeaponsOpen = false;
-
-            for (int i = 0; i < buttons.Count; i++) {
-                DisableButton(buttons[i]);
-            }
+        for (int i = 0; i < buttons.Count; i++) {
+            DisableButton(buttons[i]);
+        }
     }
 
     private void ButtonInterractabe(bool hasIt, Button button)
@@ -89,17 +86,20 @@ public class ChooseWeapon : MonoBehaviour
     {
         Canon ref_Canon = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<Canon>();
         ref_Canon.ChangeCanon(ref_Canon.weapons.heavyCanon);
+        WeaponsClosed();
     }
 
     public void LightCanon()
     {
         Canon ref_Canon = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<Canon>();
         ref_Canon.ChangeCanon(ref_Canon.weapons.lightCanon);
+        WeaponsClosed();
     }
 
     public void ProjectionCanon()
     {
         Canon ref_Canon = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<Canon>();
         ref_Canon.ChangeCanon(ref_Canon.weapons.projectionCanon);
+        WeaponsClosed();
     }
 }

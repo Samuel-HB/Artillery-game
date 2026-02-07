@@ -17,7 +17,6 @@ public class CameraRegister : MonoBehaviour
     private void Update()
     {
         timer++;
-
         if (timer == 1)
         {
             player = GameObject.Find(playerName);
