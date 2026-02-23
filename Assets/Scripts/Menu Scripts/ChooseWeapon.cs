@@ -31,7 +31,8 @@ public class ChooseWeapon : MonoBehaviour
         ref_TankBehavior = BattleManager.tanks[BattleManager.playerPlays].GetComponentInChildren<TankBehavior>();
         transform.position = new Vector3(ref_TankBehavior.transform.position.x, ref_TankBehavior.transform.position.y);
 
-        if (Input.GetMouseButtonDown(0) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == false)
+        if (Input.GetMouseButtonDown(0) && BattleManager.state == State.WaitingForInput &&
+            isWeaponsOpen == false && PauseMenu.isGamePaused == false)
         {
             isWeaponsOpen = true;
 
@@ -42,9 +43,10 @@ public class ChooseWeapon : MonoBehaviour
             ButtonInterractabe(ref_TankBehavior.so_tank.hasLightCanon, LightCanonButton);
             ButtonInterractabe(ref_TankBehavior.so_tank.hasProjectionCanon, ProjectionCanonButton);
         }
-        else if (Input.GetMouseButtonDown(0) && BattleManager.state == State.WaitingForInput && isWeaponsOpen == true) {
-            WeaponsClosed();
-        }
+        //else if (Input.GetMouseButtonDown(0) && BattleManager.state == State.WaitingForInput &&
+        //        isWeaponsOpen == true && PauseMenu.isGamePaused == false) {
+        //    WeaponsClosed();
+        //}
         else if (BattleManager.state != State.WaitingForInput) {
             WeaponsClosed();
         }
@@ -65,8 +67,7 @@ public class ChooseWeapon : MonoBehaviour
             button.interactable = true;
             button.image.color = Color.white;
         }
-        else
-        {
+        else {
             button.interactable = false;
             button.image.color = Color.gray;
         }
